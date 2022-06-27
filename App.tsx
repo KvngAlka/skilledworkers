@@ -4,12 +4,13 @@ import { StyleSheet, Text, View } from 'react-native';
 import Navbar from './components/navbar';
 import SplashScreen from './components/splash_screen';
 import SignIn from './pages/signin';
+import SignUp from './pages/signup';
 
 export default function App() {
   const theme = extendTheme({
     colors: {
       // Add new color
-      primary: {
+      primary:  {
         50: '#0052FF55',
         100: '#0052FF',
         200: '#A2D4EC',
@@ -21,14 +22,15 @@ export default function App() {
         800: '#005885',
         900: '#003F5E',
       },
-      // Redefinig only one shade, rest of the color will remain same.
-      amber: {
-        400: '#d97706',
+      black : {
+        100 : '#252525',
+        10 : '#F5F5F5'
       },
+      success : {100 : '#0ADE78'},
     },
     config: {
       // Changing initialColorMode to 'dark'
-      initialColorMode: 'dark',
+      initialColorMode: 'light',
     },
   });
 
@@ -36,7 +38,8 @@ export default function App() {
     <NativeBaseProvider theme={theme}>
       <StatusBar style="auto" />
       {/* <SplashScreen/> */}
-      <SignIn/>
+      {/* <SignIn/> */}
+      <SignUp/>
     </NativeBaseProvider>
   );
 }
