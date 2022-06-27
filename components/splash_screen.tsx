@@ -9,7 +9,7 @@ const SplashScreen = () => {
 
   return (
     <View backgroundColor={colors.primary[100]}  height = {'100%'}>
-        <StatusBar style="light"  />
+        <StatusBar style="light" backgroundColor='primary.100' />
         <View height={50}></View>
         <View style = {{alignItems : 'center'}}>
             <Logo size={87} type = 'normal' fontSize={40}/>

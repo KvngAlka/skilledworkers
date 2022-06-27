@@ -15,12 +15,12 @@ export default function App() {
         100: '#0052FF',
         200: '#A2D4EC',
         300: '#7AC1E4',
-        400: '#47A9DA',
-        500: '#0088CC',
-        600: '#007AB8',
-        700: '#006BA1',
-        800: '#005885',
-        900: '#003F5E',
+        400: '#0052FF40',
+        500: '#0052FF50',
+        600: '#0052FF',
+        700: '#0052FF0',
+        800: '#0052FF80',
+        900: '#0052FF',
       },
       black : {
         100 : '#252525',
@@ -36,7 +36,7 @@ export default function App() {
 
   return (
     <NativeBaseProvider theme={theme}>
-      <StatusBar style="auto" />
+      <StatusBar style="auto"  backgroundColor='white'/>
       {/* <SplashScreen/> */}
       {/* <SignIn/> */}
       <SignUp/>

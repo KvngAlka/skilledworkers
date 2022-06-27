@@ -1,4 +1,4 @@
-import { FormControl, HStack, Input, Link, Text, VStack , Pressable} from 'native-base'
+import { FormControl, HStack, Input, Link, Text, VStack , Pressable, Radio, Stack} from 'native-base'
 import React from 'react'
 import { StyleSheet } from 'react-native';
 
@@ -21,6 +21,21 @@ function SkillWorkerForm() {
         </FormControl>
 
         {/* gender goes here */}
+        <FormControl isRequired>
+            <FormControl.Label>Gender</FormControl.Label>
+            <Radio.Group name='gender'>
+                <Stack direction={{base : 'row'}}>
+                    <Radio color = {'primary'} value="1" my={1}>
+                        Male
+                    </Radio>
+                    <Radio value="2" my={1}>
+                        Female
+                    </Radio>
+                </Stack>
+            </Radio.Group>
+        </FormControl>
+
+        
 
 
         <FormControl isRequired>
@@ -74,6 +89,7 @@ const styles = StyleSheet.create({
         borderRadius : 12,
         padding : 10,
         width : '100%',
-        alignItems : 'center'
+        alignItems : 'center',
+        justifyContent : 'center'
     }
   });
