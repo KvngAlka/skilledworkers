@@ -1,3 +1,4 @@
+import { StatusBar } from 'expo-status-bar'
 import { Box, Center, FormControl, Heading, HStack, Input, Link, ScrollView, Text, useTheme, View, VStack, Pressable } from 'native-base'
 import React, {useState} from 'react'
 import {  StyleSheet } from 'react-native'
@@ -11,12 +12,14 @@ interface UserInput {
 }
 
 
-const SignIn = () => {
+const SignIn = ({navigation} : {navigation : any}) => {
     const {colors} = useTheme();
     const [userInput, setUserInput] = useState<UserInput | null>();
 
+
   return (
-    <ScrollView>
+    <ScrollView backgroundColor={'white'}>
+        <StatusBar backgroundColor='white'/>
         <View height={50}></View>
         <View style ={styles.logo_cont}>
             <Logo size={87} fontSize = {40} type = 'primary' />
@@ -35,7 +38,8 @@ const SignIn = () => {
                             <FormControl.Label>Phone Number</FormControl.Label>
                             <Input type='text' borderRadius={12} color = {'black.100'} 
                             keyboardType = 'numeric'
-                            value = {userInput?.phone ?? ''}   
+                            defaultValue=''
+                            value = {userInput?.phone}   
                             onChange = {(e)=> userInput && setUserInput({...userInput })} />
                         </FormControl>
 
@@ -47,11 +51,8 @@ const SignIn = () => {
                             </Link>
                         </FormControl>
 
-                        {/* <Button mt="2" onPress={()=>{console.log("You clicke on signin")}} colorScheme={'primary.100'} borderRadius = {12}>
-                            SIGN IN
-                        </Button > */}
 
-                        <Pressable mt={'2'} style = {styles.sign_in_btn} backgroundColor = 'primary.100'>
+                        <Pressable mt={'2'} onPress = {()=> navigation.navigate('Order')} style = {styles.sign_in_btn} backgroundColor = 'primary.100'>
                             <Text style = {{color : 'white'}} >SIGN IN</Text>
                         </Pressable>
 
@@ -59,9 +60,11 @@ const SignIn = () => {
                             <Text fontSize="md" color={colors.black[100]}>
                                 Don't have an account? {" "}
                             </Text>
-                            <Link _text={{color: colors.primary[100],textDecoration : 'none', fontWeight: "medium", fontSize: "sm"}} href="#">
-                                SIGN UP
-                            </Link>
+                            <Pressable onPress={()=> navigation.navigate('SignUp')} >
+                                <Text fontWeight={'medium'} fontSize = {'sm'} color = {colors.primary[100]}>
+                                    SIGN UP
+                                </Text>
+                            </Pressable>
                         </HStack>
                     </VStack>
                 </Box>
@@ -88,6 +91,7 @@ const styles = StyleSheet.create({
         borderRadius : 12,
         padding : 10,
         width : '100%',
-        alignItems : 'center'
+        alignItems : 'center',
+        justifyContent : 'center'
     }
   });

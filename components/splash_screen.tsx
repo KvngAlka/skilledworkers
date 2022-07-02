@@ -4,12 +4,12 @@ import React from 'react'
 import { Pressable, StyleSheet, Text } from 'react-native';
 import Logo from './logo';
 
-const SplashScreen = () => {
+const SplashScreen = ({navigation} : {navigation : any}) => {
     const {colors} = useTheme();
 
   return (
     <View backgroundColor={colors.primary[100]}  height = {'100%'}>
-        <StatusBar style="light" backgroundColor='primary.100' />
+        <StatusBar style='light'  backgroundColor={colors.primary[900]} />
         <View height={50}></View>
         <View style = {{alignItems : 'center'}}>
             <Logo size={87} type = 'normal' fontSize={40}/>
@@ -27,7 +27,7 @@ const SplashScreen = () => {
         </View>
       
        <View alignItems={'center'} style = {styles.btn_cont}>
-            <Pressable onPress={()=>console.log("You clicked on me")} style = {styles.btn}>
+            <Pressable onPress={()=> navigation.navigate('SignIn')} style = {styles.btn}>
                 <View width={'100%'} maxWidth={500} alignItems = "center">
                     <Text style = {{color : colors.primary[100], fontWeight : '400', fontSize : 20}}>GET STARTED</Text>
                 </View>

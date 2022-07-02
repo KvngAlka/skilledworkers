@@ -5,17 +5,18 @@ import ClientForm from '../components/client_form'
 import Logo from '../components/logo'
 import SkillWorkerForm from '../components/skill_worker_form'
 
-const SignUp = () => {
+const SignUp = ({navigation} : {navigation : any}) => {
     const [isClientSignUp, setIsClientSignUp] = useState<boolean>(true);
   return (
-    <ScrollView>
-        <View height={50}></View>
+    <ScrollView background={'white'}>
+
+        <StatusBar backgroundColor='white'/>
+
+
+        <View height={20}></View>
         <View style ={styles.logo_cont}>
             <Logo size={87} fontSize = {40} type = 'primary' />
         </View>
-
-
-
         <View>
             <Center w="100%">
                 <Box safeArea p="2" py="8" w="90%" maxW="290">
@@ -38,7 +39,7 @@ const SignUp = () => {
                     </View>
 
                     {
-                        isClientSignUp ? <ClientForm/> : <SkillWorkerForm/>
+                        isClientSignUp ? <ClientForm navigation={navigation}/> : <SkillWorkerForm navigation={navigation}/>
                     }
 
                     

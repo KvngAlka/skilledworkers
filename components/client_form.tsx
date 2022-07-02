@@ -2,7 +2,7 @@ import { FormControl, HStack, Input, Link, Text, VStack , Pressable, Radio, Stac
 import React from 'react'
 import { StyleSheet } from 'react-native';
 
-function ClientForm() {
+function ClientForm({navigation} : {navigation : any}) {
   return (
     <VStack space={3} mt="5">
         <FormControl>
@@ -49,7 +49,7 @@ function ClientForm() {
             </Link>
         </FormControl>
 
-        <Pressable mt={'2'} style = {styles.sign_up_btn} backgroundColor = 'primary.100'>
+        <Pressable mt={'2'}  onPress={()=> navigation.push('Home')} style = {styles.sign_up_btn} backgroundColor = 'primary.100'>
             <Text style = {{color : 'white'}} >SIGN UP</Text>
         </Pressable>
 
@@ -57,9 +57,11 @@ function ClientForm() {
             <Text fontSize="md" color={'black.100'}>
                 Already have an account? {" "}
             </Text>
-            <Link _text={{color: 'primary.100',textDecoration : 'none', fontWeight: "medium", fontSize: "sm"}} href="#">
-                SIGN IN
-            </Link>
+            <Pressable onPress={()=> navigation.navigate('SignIn')} >
+                <Text fontWeight={'medium'} fontSize = {'sm'} color = {'primary.100'}>
+                    SIGN UP
+                </Text>
+            </Pressable>
         </HStack>
     </VStack>
   )

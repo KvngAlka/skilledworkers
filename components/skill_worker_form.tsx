@@ -1,8 +1,8 @@
-import { FormControl, HStack, Input, Link, Text, VStack , Pressable, Radio, Stack} from 'native-base'
+import { FormControl, HStack, Input, Link, Text, VStack , Pressable, Radio, Stack, View} from 'native-base'
 import React from 'react'
 import { StyleSheet } from 'react-native';
 
-function SkillWorkerForm() {
+function SkillWorkerForm({navigation}: {navigation : any}) {
   return (
     <VStack space={3} mt="5">
         <FormControl>
@@ -24,10 +24,11 @@ function SkillWorkerForm() {
         <FormControl isRequired>
             <FormControl.Label>Gender</FormControl.Label>
             <Radio.Group name='gender'>
-                <Stack direction={{base : 'row'}}>
-                    <Radio color = {'primary'} value="1" my={1}>
+                <Stack direction={{base : 'row'}}  >
+                    <Radio color = {'primary'} value="1" my={1} >
                         Male
                     </Radio>
+                    <View width={5}></View>
                     <Radio value="2" my={1}>
                         Female
                     </Radio>
@@ -64,9 +65,11 @@ function SkillWorkerForm() {
             <Text fontSize="md" color={'black.100'}>
                 Already have an account? {" "}
             </Text>
-            <Link _text={{color: 'primary.100',textDecoration : 'none', fontWeight: "medium", fontSize: "sm"}} href="#">
-                SIGN IN
-            </Link>
+            <Pressable onPress={()=> navigation.navigate('SignIn')} >
+                <Text fontWeight={'medium'} fontSize = {'sm'} color = {'primary.100'}>
+                    SIGN IN
+                </Text>
+            </Pressable>
         </HStack>
     </VStack>
   )
