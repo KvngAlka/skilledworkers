@@ -4,9 +4,11 @@ import { StatusBar } from 'expo-status-bar';
 import { extendTheme, NativeBaseProvider,  } from 'native-base';
 import SplashScreen from './components/splash_screen';
 import Order from './pages/Client/order';
+import OrderDetails from './pages/Client/order_details';
 import Profile from './pages/Profile';
 import SignIn from './pages/signin';
 import SignUp from './pages/signup';
+import DataProvider from './state_manager/contextApi';
 
 
 
@@ -36,20 +38,24 @@ export default function App() {
   const Stack = createNativeStackNavigator();
 
   return (
-    <NativeBaseProvider theme={theme}>
-      <StatusBar style="auto"  backgroundColor='white'/>
-      <NavigationContainer>
-        <Stack.Navigator screenOptions={{title : '', headerShown : false}}  initialRouteName="Intro">
+    <DataProvider>
+      <NativeBaseProvider theme={theme}>
+        <StatusBar style="auto"  backgroundColor='white'/>
+        <NavigationContainer>
+          <Stack.Navigator screenOptions={{title : '', headerShown : false}}  initialRouteName="Intro">
 
-          <Stack.Screen name='Home' component={SplashScreen}  />
-          <Stack.Screen name='SignIn' options={{ title : "",headerShown : false }} component={SignIn} />
-          <Stack.Screen name="SignUp" options={{ title : "",headerShown : false }} component={SignUp} />
+            <Stack.Screen name='Intro' component={SplashScreen}  />
+            <Stack.Screen name='SignIn' options={{ title : "",headerShown : false }} component={SignIn} />
+            <Stack.Screen name="SignUp" options={{ title : "",headerShown : false }} component={SignUp} />
 
-          <Stack.Screen name="Order" options={{ title : "",headerShown : false }} component={Order} />
-          <Stack.Screen name="Profile" options={{ title : "",headerShown : false }} component={Profile} />
-        </Stack.Navigator>
-    </NavigationContainer>
-    </NativeBaseProvider>
+            <Stack.Screen name="Order" options={{ title : "",headerShown : false }} component={Order} />
+            <Stack.Screen name="OrderDetails" options={{ title : "",headerShown : false }} component={OrderDetails} />
+
+            <Stack.Screen name="Profile" options={{ title : "",headerShown : false }} component={Profile} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </NativeBaseProvider>
+    </DataProvider>
   );
 }
 

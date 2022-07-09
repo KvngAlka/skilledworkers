@@ -1,11 +1,31 @@
 import { StatusBar } from 'expo-status-bar';
 import { useTheme, View } from 'native-base'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Pressable, StyleSheet, Text } from 'react-native';
+import { useStateValue } from '../state_manager/contextApi';
 import Logo from './logo';
 
 const SplashScreen = ({navigation} : {navigation : any}) => {
     const {colors} = useTheme();
+
+    const {state : {user}} = useStateValue();
+    const [pageLoading, setPageLoading] = useState(true)
+
+    useEffect(()=>{
+        if(!user){
+            //fetch token from local storage
+            //use token to fetch user data
+            navigation.navigate('SignIn')
+        }
+
+        if(user){
+            
+            user.isAWorker ? navigation.navigate('Home') : "";
+        }
+    },[user])
+
+
+    if(pageLoading) return <View height={'100%'} style = {{alignItems : 'center'}}><Text>Loading...</Text></View>
 
   return (
     <View backgroundColor={colors.primary[100]}  height = {'100%'}>

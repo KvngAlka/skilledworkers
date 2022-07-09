@@ -1,4 +1,4 @@
-import { FormControl, HStack, Input, Link, Text, VStack , Pressable, Radio, Stack} from 'native-base'
+import { FormControl, HStack, Input, Link, Text, VStack , Pressable, Radio, Stack, View} from 'native-base'
 import React from 'react'
 import { StyleSheet } from 'react-native';
 
@@ -12,7 +12,7 @@ function ClientForm({navigation} : {navigation : any}) {
 
         <FormControl>
             <FormControl.Label>Age</FormControl.Label>
-            <Input borderRadius={12} color = {'black.100'} />
+            <Input borderRadius={12} keyboardType = 'numeric' color = {'black.100'} />
         </FormControl>
 
         <FormControl isRequired>
@@ -28,6 +28,7 @@ function ClientForm({navigation} : {navigation : any}) {
                     <Radio color = {'primary'} value="1" my={1}>
                         Male
                     </Radio>
+                    <View width={5}></View>
                     <Radio value="2" my={1}>
                         Female
                     </Radio>
@@ -59,7 +60,7 @@ function ClientForm({navigation} : {navigation : any}) {
             </Text>
             <Pressable onPress={()=> navigation.navigate('SignIn')} >
                 <Text fontWeight={'medium'} fontSize = {'sm'} color = {'primary.100'}>
-                    SIGN UP
+                    SIGN IN
                 </Text>
             </Pressable>
         </HStack>

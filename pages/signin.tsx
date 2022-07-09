@@ -7,14 +7,14 @@ import Logo from '../components/logo'
 
 
 interface UserInput {
-    phone : string,
+    phoneNumber : string,
     password : string,
 }
 
 
 const SignIn = ({navigation} : {navigation : any}) => {
     const {colors} = useTheme();
-    const [userInput, setUserInput] = useState<UserInput | null>();
+    const [userInput, setUserInput] = useState<UserInput | null>(null);
 
 
   return (
@@ -38,14 +38,15 @@ const SignIn = ({navigation} : {navigation : any}) => {
                             <FormControl.Label>Phone Number</FormControl.Label>
                             <Input type='text' borderRadius={12} color = {'black.100'} 
                             keyboardType = 'numeric'
-                            defaultValue=''
-                            value = {userInput?.phone}   
-                            onChange = {(e)=> userInput && setUserInput({...userInput })} />
+                            defaultValue=''  
+                            onChangeText = {(val)=> userInput && setUserInput({...userInput, phoneNumber : val })} />
                         </FormControl>
 
                         <FormControl>
                             <FormControl.Label>Password</FormControl.Label>
-                            <Input type="password"  borderRadius={12} color = {'black.100'}/>
+                            <Input type="password"  
+                            onChangeText = {(val)=> userInput && setUserInput({...userInput, password : val })}
+                            borderRadius={12} color = {'black.100'}/>
                             <Link _text={{ fontSize: "xs",fontWeight: "500", color: 'primary.100' , textDecoration : 'none' }} alignSelf="flex-end" mt="1">
                                 Forget Password?
                             </Link>

@@ -8,6 +8,7 @@ const Navbar = () => {
   return (
     <View style = {styles.navbar}>
       <Logo size={30} fontSize = {17} type = 'primary' />
+      
     </View>
   )
 }

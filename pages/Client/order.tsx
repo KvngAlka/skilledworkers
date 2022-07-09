@@ -2,11 +2,12 @@ import { Box, Center, FormControl, Heading, Input, Pressable, ScrollView, Status
 import React, { useState } from 'react'
 import { StyleSheet } from 'react-native';
 
-const Order = () => {
+const Order = ({navigation}: {navigation : any}) => {
 
     const [userInput, setUserInput] = useState({title : "", description : "", location : "", workCategory : "", img : null});
     const handleOrderSubmit = ()=>{
         console.log(userInput)
+        navigation.navigate('OrderDetails')
     }
   return (
     <ScrollView backgroundColor={'white'}>
