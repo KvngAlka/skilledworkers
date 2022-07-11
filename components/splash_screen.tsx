@@ -1,7 +1,8 @@
 import { StatusBar } from 'expo-status-bar';
 import { useTheme, View } from 'native-base'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { Pressable, StyleSheet, Text } from 'react-native';
+import PagerView from 'react-native-pager-view';
 import { useStateValue } from '../state_manager/contextApi';
 import Logo from './logo';
 
@@ -9,26 +10,23 @@ const SplashScreen = ({navigation} : {navigation : any}) => {
     const {colors} = useTheme();
 
     const {state : {user}} = useStateValue();
-    const [pageLoading, setPageLoading] = useState(true)
 
-    useEffect(()=>{
+    const handleNext = ()=>{
         if(!user){
             //fetch token from local storage
             //use token to fetch user data
-            navigation.navigate('SignIn')
+            navigation.replace('SignIn')
         }
 
-        if(user){
-            
-            user.isAWorker ? navigation.navigate('Home') : "";
-        }
-    },[user])
+        if(user)  user.isAWorker ? 
+        navigation.navigate('WorkerHome') 
+        : 
+        navigation.navigate('WorkerHome');
+    }
 
-
-    if(pageLoading) return <View height={'100%'} style = {{alignItems : 'center'}}><Text>Loading...</Text></View>
 
   return (
-    <View backgroundColor={colors.primary[100]}  height = {'100%'}>
+    <View backgroundColor={colors.primary[900]}  height = {'100%'}>
         <StatusBar style='light'  backgroundColor={colors.primary[900]} />
         <View height={50}></View>
         <View style = {{alignItems : 'center'}}>
@@ -36,9 +34,18 @@ const SplashScreen = ({navigation} : {navigation : any}) => {
         </View>
 
         <View flex={1} padding = {10} alignItems = {'center'}>
-            <View width={'80%'} maxWidth = {500} height = {'100%'} backgroundColor = {'white'} borderRadius = {15}>
+            <PagerView style={{flex : 1}}  initialPage={0} >
+                <View  flex={1} key={'1'} width = '100%' backgroundColor ='red.900' >
+                    <Text>This is pag 1</Text>
+                </View>
+                <View flex={1} key = {'2'} backgroundColor = 'yellow.900' >
 
-            </View>
+                </View>
+                <View flex={1} key={'3'} backgroundColor='green.900'>
+
+                </View>
+
+            </PagerView>
             <View style = {styles.carousel_indicator_cont}>
                 <View style = {styles.carousel_indicator}></View>
                 <View style = {styles.carousel_indicator}></View>
@@ -47,9 +54,9 @@ const SplashScreen = ({navigation} : {navigation : any}) => {
         </View>
       
        <View alignItems={'center'} style = {styles.btn_cont}>
-            <Pressable onPress={()=> navigation.navigate('SignIn')} style = {styles.btn}>
+            <Pressable onPress={handleNext} style = {styles.btn}>
                 <View width={'100%'} maxWidth={500} alignItems = "center">
-                    <Text style = {{color : colors.primary[100], fontWeight : '400', fontSize : 20}}>GET STARTED</Text>
+                    <Text style = {{color : colors.primary[900], fontWeight : '400', fontSize : 20}}>GET STARTED</Text>
                 </View>
             </Pressable>
        </View>

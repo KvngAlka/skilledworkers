@@ -1,15 +1,27 @@
-import { useTheme} from 'native-base'
+import Ionicons  from '@expo/vector-icons/Ionicons';
+import { HStack, Pressable, Icon, useTheme} from 'native-base'
 import React from 'react'
-import { StyleSheet, View } from 'react-native'
-import Logo from './logo';
+import { StyleSheet } from 'react-native'
 
-const Navbar = () => {
+const Navbar = ({setInitPage} : {setInitPage : any}) => {
     const {colors} = useTheme();
   return (
-    <View style = {styles.navbar}>
-      <Logo size={30} fontSize = {17} type = 'primary' />
-      
-    </View>
+    <HStack style = {styles.navbar} px="5" py="3" mt={1} justifyContent="space-between" alignItems="center" w="100%" >
+      <Pressable onPress={()=> setInitPage(0)} borderBottomColor={'primary.900'} borderBottomWidth = {3} pb = {1} height={30}>
+        <Ionicons name='home-outline' size={24}  color ='blue' />
+      </Pressable>
+
+      <Pressable >
+        <Icon  name='menu' />
+        <Ionicons name='add-circle-outline' size={24} />
+      </Pressable>
+      <Pressable>
+        <Ionicons name='notifications-outline' size={24} />
+      </Pressable>
+      <Pressable>
+        <Ionicons name='person-outline' size={24} />
+      </Pressable>
+    </HStack>
   )
 }
 
@@ -18,10 +30,9 @@ export default Navbar
 
 const styles = StyleSheet.create({
   navbar : {
-    padding : 10,
+    padding : 5,
     height : 50,
-    marginTop : 50,
-    flexDirection : 'row',
-    justifyContent : 'space-between' 
+    bottom : 0,
+    backgroundColor : 'white'
   }
 })

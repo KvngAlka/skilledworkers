@@ -3,11 +3,13 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StatusBar } from 'expo-status-bar';
 import { extendTheme, NativeBaseProvider,  } from 'native-base';
 import SplashScreen from './components/splash_screen';
+import ClientHome from './pages/Client/home';
 import Order from './pages/Client/order';
 import OrderDetails from './pages/Client/order_details';
 import Profile from './pages/Profile';
 import SignIn from './pages/signin';
 import SignUp from './pages/signup';
+import WorkerHome from './pages/worker/home';
 import DataProvider from './state_manager/contextApi';
 
 
@@ -17,7 +19,7 @@ export default function App() {
     colors: {
       // Add new color
       primary:  { 
-        50: '#0052FF55', 100: '#0052FF', 200: '#A2D4EC',
+        50: '#0052FF5', 100: '#0052FF10', 200: '#A2D4EC20',
         300: '#7AC1E4', 400: '#0052FF40', 500: '#0052FF50',
         600: '#0052FF', 700: '#0052FF0',
         800: '#0052FF80', 900: '#0052FF',
@@ -48,10 +50,22 @@ export default function App() {
             <Stack.Screen name='SignIn' options={{ title : "",headerShown : false }} component={SignIn} />
             <Stack.Screen name="SignUp" options={{ title : "",headerShown : false }} component={SignUp} />
 
+
+
+            {/* CLIENTS ROUTE */}
+            <Stack.Screen name="ClientHome" options={{ title : "",headerShown : false }} component={ClientHome} />
             <Stack.Screen name="Order" options={{ title : "",headerShown : false }} component={Order} />
             <Stack.Screen name="OrderDetails" options={{ title : "",headerShown : false }} component={OrderDetails} />
-
             <Stack.Screen name="Profile" options={{ title : "",headerShown : false }} component={Profile} />
+
+
+
+
+            {/* WORKER ROUTES */}
+            <Stack.Screen name="WorkerHome" options={{ title : "",headerShown : false }} component={WorkerHome} />
+
+
+            
           </Stack.Navigator>
         </NavigationContainer>
       </NativeBaseProvider>

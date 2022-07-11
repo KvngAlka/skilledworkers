@@ -1,6 +1,7 @@
 import { Box, Center, FormControl, Heading, Input, Pressable, ScrollView, StatusBar, Text, TextArea, View, VStack } from 'native-base'
 import React, { useState } from 'react'
 import { StyleSheet } from 'react-native';
+import AppBar from '../../components/appbar';
 
 const Order = ({navigation}: {navigation : any}) => {
 
@@ -11,10 +12,9 @@ const Order = ({navigation}: {navigation : any}) => {
     }
   return (
     <ScrollView backgroundColor={'white'}>
-        <StatusBar backgroundColor='white'/>
         <View>
             <Center w="100%">
-                <Box safeArea p="2" py="8" w="90%" maxW="290">
+                <Box safeArea p="2" py="1" w="90%" maxW="290">
                     <Heading size="lg" fontWeight="600" color= {'black.100'}  >
                         Order Service
                     </Heading>
@@ -30,7 +30,7 @@ const Order = ({navigation}: {navigation : any}) => {
 
                         <FormControl>
                             <FormControl.Label>Description</FormControl.Label>
-                            <TextArea  type="text" borderRadius={12} color={'black.100'} 
+                            <TextArea  type="text" borderRadius={12} color={'black.100'} height = {300}
                             onChangeText = {(val)=> userInput && setUserInput({...userInput, description : val})} 
                             autoCompleteType={undefined}/>
                         </FormControl>
@@ -63,15 +63,12 @@ const Order = ({navigation}: {navigation : any}) => {
                         }
 
 
-                        <Pressable mt={'2'} onPress = {handleOrderSubmit} style = {styles.order_btn} backgroundColor = 'primary.100'>
+                        <Pressable mt={'2'} onPress = {handleOrderSubmit} style = {styles.order_btn} backgroundColor = 'primary.900'>
                             <Text style = {{color : 'white'}} >ORDER</Text>
                         </Pressable>
-
-                        
                     </VStack>
                 </Box>
             </Center>
-
         </View>
     </ScrollView>
   )

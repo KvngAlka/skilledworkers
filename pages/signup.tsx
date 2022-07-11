@@ -1,12 +1,11 @@
 import { Box,Center, Heading, Pressable, ScrollView, StatusBar, Text, View} from 'native-base'
 import React, { useState } from 'react'
 import { StyleSheet } from 'react-native'
-import ClientForm from '../components/client_form'
 import Logo from '../components/logo'
-import SkillWorkerForm from '../components/skill_worker_form'
+import RegistrationForm from '../components/form'
 
 const SignUp = ({navigation} : {navigation : any}) => {
-    const [isClientSignUp, setIsClientSignUp] = useState<boolean>(true);
+    const [isAWorker, setIsAWorker] = useState<boolean>(false);
   return (
     <ScrollView background={'white'}>
 
@@ -25,22 +24,21 @@ const SignUp = ({navigation} : {navigation : any}) => {
                     </Heading>
 
                     <View mt={'5'} style = {styles.sign_up_type_cont} >
-                        <Pressable style = {styles.sign_up_type} background = {isClientSignUp ? 'primary.100' : 'white'} onPress = {()=> setIsClientSignUp(true)}>
+                        <Pressable style = {styles.sign_up_type} background = {!isAWorker ? 'primary.900' : 'white'} onPress = {()=> setIsAWorker(false)}>
                             <View >
-                                <Text color={isClientSignUp ? 'white' : 'black.100'}>CLIENT</Text>
+                                <Text color={!isAWorker ? 'white' : 'black.100'}>CLIENT</Text>
                             </View>
                         </Pressable>
-                        <Pressable style = {styles.sign_up_type} background = {!isClientSignUp ? 'primary.100' : 'white'}  onPress = {()=> setIsClientSignUp(false)}>
+                        <Pressable style = {styles.sign_up_type} background = {isAWorker ? 'primary.900' : 'white'}  onPress = {()=> setIsAWorker(true)}>
                             <View >
-                                <Text color={!isClientSignUp ? 'white' : 'black.100'}>WORKER</Text>
+                                <Text color={isAWorker ? 'white' : 'black.100'}>WORKER</Text>
                             </View>
                         </Pressable>
                         
                     </View>
 
-                    {
-                        isClientSignUp ? <ClientForm navigation={navigation}/> : <SkillWorkerForm navigation={navigation}/>
-                    }
+                    <RegistrationForm  isAWorker = {isAWorker} navigation = {navigation} />
+
 
                     
                 </Box>

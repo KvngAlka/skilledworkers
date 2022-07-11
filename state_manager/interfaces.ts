@@ -17,9 +17,10 @@ export interface UserProfile {
     phoneNumber : String,
     location : String,
     ghanaCardNumber? : String,
+    password : String,
     isAWorker? : Boolean,
-    isOnline : Boolean,
-    isActive : Boolean
+    isOnline? : Boolean,
+    isActive? : Boolean
 }
 
 export interface PayLoad {

@@ -7,7 +7,7 @@ const Logo : React.FC<{ size : number, type : 'primary' | 'normal', fontSize : n
     const {colors} = useTheme();
 
     const logoProp = {
-        backgroundColor : type === 'primary' ? colors.primary[100] : "white",
+        backgroundColor : type === 'primary' ? colors.primary[900] : "white",
         color : type === 'primary' ? "white" : "black"
     }
     

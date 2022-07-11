@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar'
-import { Box, Center, Heading, HStack, Pressable, ScrollView, Text, View, VStack } from 'native-base'
+import { Box, Center, Heading, HStack, Image, Pressable, ScrollView, Text, View, VStack } from 'native-base'
 import React from 'react'
 import { StyleSheet } from 'react-native'
 
@@ -16,12 +16,16 @@ const OrderDetails = () => {
                         Order Details
                     </Heading>
 
+                    <Image alt='post_img' height={300}/>
+                    <Text fontWeight={'bold'}>Title</Text>
+                    <Text color={'primary.900'}>Kingsford Ashiye</Text>
+
                     <Pressable mt={'2'} onPress = {()=> console.log('first')} style = {styles.btn} backgroundColor = 'green.600'>
-                            <Text style = {{color : 'white'}} >PENDING</Text>
-                        </Pressable>
-                        <Pressable mt={'2'} onPress = {()=> console.log('first')} style = {styles.btn} backgroundColor = 'red.600'>
-                            <Text style = {{color : 'white'}} >CANCEL</Text>
-                        </Pressable>
+                        <Text style = {{color : 'white'}} >PENDING</Text>
+                    </Pressable>
+                    <Pressable mt={'2'} onPress = {()=> console.log('first')} style = {styles.btn} backgroundColor = 'red.600'>
+                        <Text style = {{color : 'white'}} >CANCEL</Text>
+                    </Pressable>
                 </Box>
             </Center>
 

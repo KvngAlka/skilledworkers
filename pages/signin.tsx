@@ -1,8 +1,12 @@
 import { StatusBar } from 'expo-status-bar'
 import { Box, Center, FormControl, Heading, HStack, Input, Link, ScrollView, Text, useTheme, View, VStack, Pressable } from 'native-base'
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {  StyleSheet } from 'react-native'
 import Logo from '../components/logo'
+import { axiosInstance } from '../state_manager/axios'
+import { LOGIN } from '../state_manager/constants'
+import { useStateValue } from '../state_manager/contextApi'
+import { useToast } from 'native-base';
 
 
 
@@ -15,6 +19,39 @@ interface UserInput {
 const SignIn = ({navigation} : {navigation : any}) => {
     const {colors} = useTheme();
     const [userInput, setUserInput] = useState<UserInput | null>(null);
+    const [signInLoading, setSignLoading] = useState(false)
+    const {state : {user},dispatch} = useStateValue();
+    const toast = useToast();
+
+
+    useEffect(()=>{
+        if(user){
+            user.isAWorker 
+            ? 
+            navigation.replace('WorkerHome') 
+            : 
+            navigation.replace('ClientHome')
+        }
+    },[user])
+
+    const handleSign = async()=>{
+        setSignLoading(true);
+
+        await axiosInstance.post("/auth/user/login",userInput).then((res:any)=>{
+            const data = res.data;
+            if(data.code === 400){
+                toast.show({title  : data.msg, duration : 3000,fontWeight : 'normal', backgroundColor : "primary.900"});
+                setSignLoading(false)
+                return;
+            }
+
+            if(data){
+                setSignLoading(false)
+                dispatch({type : LOGIN, payload : res.data})
+            }
+            setSignLoading(false)
+        }).catch((err:any)=>{ console.log(err.message); setSignLoading(false)})
+    }
 
 
   return (
@@ -33,19 +70,20 @@ const SignIn = ({navigation} : {navigation : any}) => {
                         Sign In
                     </Heading>
 
+
                     <VStack space={3} mt="5">
                         <FormControl >
                             <FormControl.Label>Phone Number</FormControl.Label>
                             <Input type='text' borderRadius={12} color = {'black.100'} 
                             keyboardType = 'numeric'
                             defaultValue=''  
-                            onChangeText = {(val)=> userInput && setUserInput({...userInput, phoneNumber : val })} />
+                            onChangeText = {(val)=> userInput? setUserInput({...userInput, phoneNumber : val }): setUserInput({phoneNumber : val,password : ''})}   />
                         </FormControl>
 
                         <FormControl>
                             <FormControl.Label>Password</FormControl.Label>
                             <Input type="password"  
-                            onChangeText = {(val)=> userInput && setUserInput({...userInput, password : val })}
+                            onChangeText = {(val)=> userInput ? setUserInput({...userInput, password : val })  : setUserInput({phoneNumber : '',password : val})}
                             borderRadius={12} color = {'black.100'}/>
                             <Link _text={{ fontSize: "xs",fontWeight: "500", color: 'primary.100' , textDecoration : 'none' }} alignSelf="flex-end" mt="1">
                                 Forget Password?
@@ -53,16 +91,16 @@ const SignIn = ({navigation} : {navigation : any}) => {
                         </FormControl>
 
 
-                        <Pressable mt={'2'} onPress = {()=> navigation.navigate('Order')} style = {styles.sign_in_btn} backgroundColor = 'primary.100'>
-                            <Text style = {{color : 'white'}} >SIGN IN</Text>
+                        <Pressable mt={'2'} onPress = {handleSign} style = {styles.sign_in_btn} backgroundColor = 'primary.900'>
+                            <Text style = {{color : 'white'}} >{signInLoading ? 'LOADING...' : 'SIGN IN'}</Text>
                         </Pressable>
 
                         <HStack mt="6" justifyContent="flex-start">
                             <Text fontSize="md" color={colors.black[100]}>
                                 Don't have an account? {" "}
                             </Text>
-                            <Pressable onPress={()=> navigation.navigate('SignUp')} >
-                                <Text fontWeight={'medium'} fontSize = {'sm'} color = {colors.primary[100]}>
+                            <Pressable onPress={()=> navigation.replace('SignUp')} >
+                                <Text fontWeight={'medium'} fontSize = {'sm'} color = {colors.primary[900]}>
                                     SIGN UP
                                 </Text>
                             </Pressable>
