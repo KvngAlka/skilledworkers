@@ -1,48 +1,81 @@
 import Ionicons from "@expo/vector-icons/Ionicons"
-import { HStack, Input, Pressable, ScrollView, Text, View } from "native-base"
+import { Center, HStack, Icon, Input, Pressable, ScrollView, Text, Toast, View } from "native-base"
+import { useCallback, useEffect, useState } from "react"
+import { RefreshControl } from "react-native"
 import ClientPostTile from "../../components/clientpost_tile"
-import Layout from "./layout"
-import Order from "./order"
+import { axiosInstance } from "../../state_manager/axios"
+import { useStateValue } from "../../state_manager/contextApi"
+
+
+
+
 
 
 
 const ClientHome = ({navigation} : {navigation : any}) => {
-    const arr = [1,2,3,4,5,6,7,8,8,9,9]
+
+    const {state : {user}} = useStateValue();
+    const [listPosts, setListPost] = useState<any[] | null>(null)
+    const [postsLoading, setPostsLoading] = useState(true)
+    const [refreshing, setRefreshing] = useState(false);
+
+
+
+    const fetchPosts = async()=>{
+        await axiosInstance.post(
+            "/post/get/clientposts",
+            {_id : user?._id, phoneNumber : user?.phoneNumber},
+            {headers : { "Authorization" : `Bearer ${user?.accessToken}` }} 
+        )
+        .then((res)=>{
+            console.log("User's post: ", res.data)
+
+            const {data} = res;
+            if(data.code === 400) Toast.show({'title' : data.msg})
+
+            if(data.code === 201) setListPost(data.data)
+
+            setPostsLoading(false)
+        })
+        .catch((err:any)=>{Toast.show({title : err.message})})
+    }
+
+
+    const onRefresh = useCallback(() => {
+        setRefreshing(true);
+        fetchPosts().then(()=> setRefreshing(false))
+      },[]);
+
+    useEffect(()=>{
+        
+
+        fetchPosts()
+    },[user])
+
+
+    
+    
   return (
-    <Layout>
-        {/* HOME VIEW */}
-        <View key={'1'}>
-            <View backgroundColor={'white'} width = "100%">
-                <HStack p={2} alignItems='center'>
-                    <Input placeholder='Search posts' flex={1} mr={2} borderRadius = {12} height = {8}/>
-                    <Pressable  padding={2}>
-                        <Ionicons name="search" size={24} color="black" />
-                    </Pressable>
-                </HStack>
-            </View>
-            <ScrollView flex={1} py={2} px={'1'} >
-                <ClientPostTile/>
-                {
-                    arr.map((_,i)=>{
-                        return <ClientPostTile key={i}/>
-                    })
-                }
-            </ScrollView>
+    <View style={{flex : 1}}>
+        <View backgroundColor={'white'} width = "100%">
+            <HStack p={2} alignItems='center'>
+                <Input placeholder='Search posts' flex={1} mr={2} borderRadius = {12} height = {8}/>
+                <Pressable  py={2} px={3} backgroundColor = 'primary.900' borderRadius={12}>
+                    <Icon as={Ionicons} name="search" size={'md'} color="white" />
+                </Pressable>
+            </HStack>
         </View>
-
-
-        {/* ORDER VIEW */}
-        <View key={'2'}>
-            <Order navigation={navigation}/>
-        </View>
-
-
-
-        {/* NOTIFICATION VIEW */}
-        <View>
-            <Text>Notification</Text>
-        </View>
-    </Layout>
+        <ScrollView refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />} flex={1} my={1} px={'1'} showsHorizontalScrollIndicator = {false} >
+            {
+                postsLoading && <Center><Text>Loading....</Text></Center>
+            }
+            {
+                listPosts?.map((post,i)=>{
+                    return <ClientPostTile key={i} title = {post.title} description = {post.description} navigation = {navigation} />
+                })
+            }
+        </ScrollView>
+    </View>
   )
 }
 

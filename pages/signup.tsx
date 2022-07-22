@@ -10,15 +10,13 @@ const SignUp = ({navigation} : {navigation : any}) => {
     <ScrollView background={'white'}>
 
         <StatusBar backgroundColor='white'/>
-
-
         <View height={20}></View>
         <View style ={styles.logo_cont}>
             <Logo size={87} fontSize = {40} type = 'primary' />
         </View>
         <View>
             <Center w="100%">
-                <Box safeArea p="2" py="8" w="90%" maxW="290">
+                <Box safeArea p="2" py="4" w="90%" >
                     <Heading size="lg" fontWeight="600" color= {'black.100'}  >
                         Sign Up
                     </Heading>
@@ -54,7 +52,7 @@ export default SignUp
 
 const styles = StyleSheet.create({
     logo_cont : {
-        padding : 10,
+        padding : 5,
         alignItems : 'center',
     },
     form_cont : {
@@ -67,7 +65,7 @@ const styles = StyleSheet.create({
         borderBottomColor : 'black.10'
     },
     sign_up_type : {
-        padding : 15,
+        padding : 10,
         flex : 1,
         alignItems : 'center'
     }

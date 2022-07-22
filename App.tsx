@@ -1,43 +1,64 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StatusBar } from 'expo-status-bar';
-import { extendTheme, NativeBaseProvider,  } from 'native-base';
+import {  NativeBaseProvider,  } from 'native-base';
 import SplashScreen from './components/splash_screen';
-import ClientHome from './pages/Client/home';
-import Order from './pages/Client/order';
+import ClientLayout from './pages/Client/layout';
 import OrderDetails from './pages/Client/order_details';
-import Profile from './pages/Profile';
 import SignIn from './pages/signin';
 import SignUp from './pages/signup';
-import WorkerHome from './pages/worker/home';
-import DataProvider from './state_manager/contextApi';
+import DataProvider, { useStateValue } from './state_manager/contextApi';
+import { theme } from './state_manager/theme';
 
+
+import * as SQLite from "expo-sqlite";
+import { Platform } from 'react-native';
+import { useEffect } from 'react';
+import WorkerLayout from './pages/worker/layout';
+
+function openDatabase() {
+  if (Platform.OS === "web") {
+    return {
+      transaction: () => {
+        return {
+          executeSql: () => {},
+        };
+      },
+    };
+  }
+
+  const db = SQLite.openDatabase("db.db");
+  return db;
+}
+
+
+export const db = openDatabase();
 
 
 export default function App() {
-  const theme = extendTheme({
-    colors: {
-      // Add new color
-      primary:  { 
-        50: '#0052FF5', 100: '#0052FF10', 200: '#A2D4EC20',
-        300: '#7AC1E4', 400: '#0052FF40', 500: '#0052FF50',
-        600: '#0052FF', 700: '#0052FF0',
-        800: '#0052FF80', 900: '#0052FF',
-      },
-      black : {
-        100 : '#252525',
-        10 : '#F5F5F5'
-      },
-      success : {100 : '#0ADE78'},
-    },
-    config: {
-      // Changing initialColorMode to 'dark'
-      initialColorMode: 'light',
-    },
-  });
-
-
   const Stack = createNativeStackNavigator();
+  const {state} = useStateValue()
+
+  useEffect(() => {
+
+    const createTable = ()=>  db.transaction((tx) => {
+      tx.executeSql(
+          "CREATE TABLE IF NOT EXISTS"
+          + " Users"
+          + ` (ID INTEGER PRIMARY KEY AUTOINCREMENT,_id TEXT,accessToken Text,
+              fullName TEXT, age TEXT,gender TEXT, phoneNumber TEXT,
+              location TEXT, ghanaCardNumber TEXT,password TEXT,
+              isAWorker TEXT,isOnline TEXT, isActive TEXT
+              )`,
+          [],
+          (tx,res)=> {console.log("Table Created")},
+          (_,err)=> { console.log(err); return false}
+      )
+    })
+
+
+    createTable();
+  }, []);
 
   return (
     <DataProvider>
@@ -53,16 +74,14 @@ export default function App() {
 
 
             {/* CLIENTS ROUTE */}
-            <Stack.Screen name="ClientHome" options={{ title : "",headerShown : false }} component={ClientHome} />
-            <Stack.Screen name="Order" options={{ title : "",headerShown : false }} component={Order} />
+            <Stack.Screen name="ClientLayout" options={{ title : "",headerShown : false }} component={ClientLayout} />
             <Stack.Screen name="OrderDetails" options={{ title : "",headerShown : false }} component={OrderDetails} />
-            <Stack.Screen name="Profile" options={{ title : "",headerShown : false }} component={Profile} />
 
 
 
 
             {/* WORKER ROUTES */}
-            <Stack.Screen name="WorkerHome" options={{ title : "",headerShown : false }} component={WorkerHome} />
+            <Stack.Screen name="WorkerLayout" options={{ title : "",headerShown : false }} component={WorkerLayout} />
 
 
             

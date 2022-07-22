@@ -12,8 +12,11 @@ export interface DataContextInterface {
 }
 
 export interface UserProfile {
+    _id? : String,
+    accessToken? : String,
     fullName : String,
     age : String,
+    gender : String,
     phoneNumber : String,
     location : String,
     ghanaCardNumber? : String,
@@ -21,6 +24,16 @@ export interface UserProfile {
     isAWorker? : Boolean,
     isOnline? : Boolean,
     isActive? : Boolean
+}
+
+
+export interface PostProfile {
+    _id? :string,
+    title : string,
+    description : string,
+    location : string,
+    workCategory : string,
+    image? : any
 }
 
 export interface PayLoad {

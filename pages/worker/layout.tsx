@@ -1,19 +1,20 @@
-import React, { useState } from 'react'
-import { Box,Icon,useTheme, View,} from 'native-base'
+import React from 'react'
+import { Box,Icon,View,} from 'native-base'
 import AppBar from '../../components/appbar'
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Profile from '../Profile'
-import Order from './order'
 import { Ionicons } from '@expo/vector-icons'
-import ClientHome from './home'
+import WorkerHome from './home'
+import AddSkill from './add_skill';
+import Notifications from './notifications';
 
 
 const Tab = createBottomTabNavigator();
 
 
 
-const ClientLayout = () => {
+const WorkerLayout = () => {
 
   return (
     <View flex={1}>
@@ -24,17 +25,17 @@ const ClientLayout = () => {
         <Tab.Screen  
         options={{tabBarIcon : ()=> <Icon  as={Ionicons} name='square' size={'lg'} color={'black'}/>  }}  
         name = "Home" 
-        component={ClientHome}
+        component={WorkerHome}
         />
 
         <Tab.Screen 
         options={{tabBarIcon : ()=> <Icon as={Ionicons} name='add-circle-outline' size={'lg'} />}}
-        name="Order" component={Order} />
+        name="Order" component={AddSkill} />
 
 
         <Tab.Screen 
         options={{tabBarIcon : ()=>  <Icon as={Ionicons} name='notifications-outline' size={'lg'} />}}
-        name="Notifications" component={Order} />
+        name="Notifications" component={Notifications} />
 
 
         <Tab.Screen 
@@ -48,6 +49,6 @@ const ClientLayout = () => {
   )
 }
 
-export default ClientLayout
+export default WorkerLayout
 
 

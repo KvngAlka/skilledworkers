@@ -1,20 +1,35 @@
-import { Box, Center, FormControl, Heading, Input, Pressable, ScrollView, StatusBar, Text, TextArea, View, VStack } from 'native-base'
+import { Box, Center, FormControl, Heading, Input, Pressable, ScrollView, StatusBar, Text, TextArea, Toast, View, VStack } from 'native-base'
 import React, { useState } from 'react'
 import { StyleSheet } from 'react-native';
-import AppBar from '../../components/appbar';
+import { axiosInstance } from '../../state_manager/axios';
+import { useStateValue } from '../../state_manager/contextApi';
 
-const Order = ({navigation}: {navigation : any}) => {
 
-    const [userInput, setUserInput] = useState({title : "", description : "", location : "", workCategory : "", img : null});
-    const handleOrderSubmit = ()=>{
-        console.log(userInput)
-        navigation.navigate('OrderDetails')
+
+
+const Order = () => {
+
+    const [userInput, setUserInput] = useState({title : "", description : "", location : "", workCategory : ""});
+    const {state : {user}} = useStateValue();
+    const [dataSubmitting,setDataSubmitting] = useState(false)
+
+    const handleOrderSubmit = async()=>{
+        setDataSubmitting(true)
+        await axiosInstance.post('/post/add',{ownerId : user?._id,...userInput},{headers : {"Authorization" : `Bearer ${user?.accessToken}`}})
+        .then((res)=>{
+            console.log("Submit res",res.data);
+            
+            Toast.show({title : "Successfully Posted Order"})
+            setUserInput({title : "",description : "",location : "",workCategory : ""})
+            setDataSubmitting(false)
+        })
+        .catch((err:any)=>{Toast.show({title : `${err.message}`}); setDataSubmitting(false)})
     }
   return (
     <ScrollView backgroundColor={'white'}>
         <View>
             <Center w="100%">
-                <Box safeArea p="2" py="1" w="90%" maxW="290">
+                <Box safeArea p="2" py="1" w="90%" >
                     <Heading size="lg" fontWeight="600" color= {'black.100'}  >
                         Order Service
                     </Heading>
@@ -31,6 +46,7 @@ const Order = ({navigation}: {navigation : any}) => {
                         <FormControl>
                             <FormControl.Label>Description</FormControl.Label>
                             <TextArea  type="text" borderRadius={12} color={'black.100'} height = {300}
+                            value = {userInput?.description}
                             onChangeText = {(val)=> userInput && setUserInput({...userInput, description : val})} 
                             autoCompleteType={undefined}/>
                         </FormControl>
@@ -39,7 +55,7 @@ const Order = ({navigation}: {navigation : any}) => {
                             <FormControl.Label>Work Category</FormControl.Label>
                             <Input type='text' borderRadius={12} color = {'black.100'} 
                             defaultValue=''
-                            value = {userInput?.title}   
+                            value = {userInput?.workCategory}   
                             onChangeText = {(val)=> userInput && setUserInput({...userInput, workCategory : val })} />
                         </FormControl>
 
@@ -47,7 +63,7 @@ const Order = ({navigation}: {navigation : any}) => {
                             <FormControl.Label>Location</FormControl.Label>
                             <Input type='text' borderRadius={12} color = {'black.100'} 
                             defaultValue=''
-                            value = {userInput?.title}   
+                            value = {userInput?.location}   
                             onChangeText = {(val)=> userInput && setUserInput({...userInput , location : val})} />
                         </FormControl>
 
@@ -56,7 +72,8 @@ const Order = ({navigation}: {navigation : any}) => {
                         </Pressable>
 
                         {
-                            userInput.img &&
+                            // userInput.img &&
+                            false &&
                             <View>
                                 
                             </View>
@@ -64,7 +81,9 @@ const Order = ({navigation}: {navigation : any}) => {
 
 
                         <Pressable mt={'2'} onPress = {handleOrderSubmit} style = {styles.order_btn} backgroundColor = 'primary.900'>
-                            <Text style = {{color : 'white'}} >ORDER</Text>
+                            <Text style = {{color : 'white'}} >
+                                { dataSubmitting ? "LOADING..." : "ORDER"}
+                            </Text>
                         </Pressable>
                     </VStack>
                 </Box>

@@ -30,7 +30,7 @@ const SignIn = ({navigation} : {navigation : any}) => {
             ? 
             navigation.replace('WorkerHome') 
             : 
-            navigation.replace('ClientHome')
+            navigation.replace('ClientLayout')
         }
     },[user])
 
@@ -47,10 +47,9 @@ const SignIn = ({navigation} : {navigation : any}) => {
 
             if(data){
                 setSignLoading(false)
-                dispatch({type : LOGIN, payload : res.data})
+                dispatch({type : LOGIN, payload :{ ...data.data, accessToken : data.accessToken}})
             }
-            setSignLoading(false)
-        }).catch((err:any)=>{ console.log(err.message); setSignLoading(false)})
+        }).catch((err:any)=>{ toast.show({title : err.message}); setSignLoading(false)})
     }
 
 

@@ -8,7 +8,7 @@ import { UserProfile } from '../state_manager/interfaces';
 
 function RegistrationForm({navigation, isAWorker}: {navigation : any, isAWorker : boolean}) {
 
-    const initState:UserProfile = {fullName : "",age : "", location : "",phoneNumber : "", password : ""}
+    const initState:UserProfile = {fullName : "",age : "",gender : "", location : "",phoneNumber : "", password : ""}
     const [userInput, setUserInput] = useState<UserProfile>(initState);
     const [isSignUpLoading, setIsSignUpLoading] = useState(false);
     const toast = useToast();
@@ -22,7 +22,7 @@ function RegistrationForm({navigation, isAWorker}: {navigation : any, isAWorker 
             ? 
             navigation.replace('WorkerHome') 
             : 
-            navigation.replace('ClientHome')
+            navigation.replace('ClientLayout')
         }
     },[user])
 
@@ -74,7 +74,7 @@ function RegistrationForm({navigation, isAWorker}: {navigation : any, isAWorker 
         {/* gender goes here */}
         <FormControl isRequired>
             <FormControl.Label>Gender</FormControl.Label>
-            <Radio.Group name='gender'>
+            <Radio.Group name='gender' onChange={(val)=>{ setUserInput({...userInput, gender : val})}}>
                 <Stack direction={{base : 'row'}}  >
                     <Radio color = {'primary'} value="male" my={1} >
                         Male
@@ -126,7 +126,7 @@ function RegistrationForm({navigation, isAWorker}: {navigation : any, isAWorker 
             </Link>
         </FormControl>
 
-        <Pressable onPress={handleSignUp} mt={'2'} style = {styles.sign_up_btn} backgroundColor = 'primary.100'>
+        <Pressable onPress={handleSignUp} mt={'2'} style = {styles.sign_up_btn} backgroundColor = 'primary.900'>
             <Text style = {{color : 'white'}} >{isSignUpLoading ? 'LOADING...' : 'SIGN UP' }</Text>
         </Pressable>
 
@@ -134,7 +134,7 @@ function RegistrationForm({navigation, isAWorker}: {navigation : any, isAWorker 
             <Text fontSize="md" color={'black.100'}>
                 Already have an account? {" "}
             </Text>
-            <Pressable onPress={()=> navigation.navigate('SignIn')} >
+            <Pressable onPress={()=> navigation.replace('SignIn')} >
                 <Text fontWeight={'medium'} fontSize = {'sm'} color = {'primary.900'}>
                     SIGN IN
                 </Text>
