@@ -12,15 +12,16 @@ export interface DataContextInterface {
 }
 
 export interface UserProfile {
-    _id? : String,
-    accessToken? : String,
-    fullName : String,
-    age : String,
-    gender : String,
-    phoneNumber : String,
-    location : String,
-    ghanaCardNumber? : String,
-    password : String,
+    _id? : string,
+    accessToken? : string,
+    fullName : string,
+    age : string,
+    gender : string,
+    phoneNumber : string,
+    location : string,
+    ghanaCardNumber? : string,
+    skills? : string[],
+    password : string,
     isAWorker? : Boolean,
     isOnline? : Boolean,
     isActive? : Boolean

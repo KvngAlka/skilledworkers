@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar'
-import { Box, Center, FormControl, Heading, HStack, Input, Link, ScrollView, Text, useTheme, View, VStack, Pressable } from 'native-base'
+import { Box, Center, FormControl, Heading, HStack, Input, Link, ScrollView, Text, useTheme, View, VStack, Pressable, Spinner, Toast } from 'native-base'
 import React, {useEffect, useState} from 'react'
 import {  StyleSheet } from 'react-native'
 import Logo from '../components/logo'
@@ -7,6 +7,7 @@ import { axiosInstance } from '../state_manager/axios'
 import { LOGIN } from '../state_manager/constants'
 import { useStateValue } from '../state_manager/contextApi'
 import { useToast } from 'native-base';
+import { addUserToDB } from '../state_manager/local_db'
 
 
 
@@ -28,7 +29,7 @@ const SignIn = ({navigation} : {navigation : any}) => {
         if(user){
             user.isAWorker 
             ? 
-            navigation.replace('WorkerHome') 
+            navigation.replace('WorkerLayout') 
             : 
             navigation.replace('ClientLayout')
         }
@@ -47,6 +48,7 @@ const SignIn = ({navigation} : {navigation : any}) => {
 
             if(data){
                 setSignLoading(false)
+                addUserToDB(data.data, Toast)
                 dispatch({type : LOGIN, payload :{ ...data.data, accessToken : data.accessToken}})
             }
         }).catch((err:any)=>{ toast.show({title : err.message}); setSignLoading(false)})
@@ -91,7 +93,20 @@ const SignIn = ({navigation} : {navigation : any}) => {
 
 
                         <Pressable mt={'2'} onPress = {handleSign} style = {styles.sign_in_btn} backgroundColor = 'primary.900'>
-                            <Text style = {{color : 'white'}} >{signInLoading ? 'LOADING...' : 'SIGN IN'}</Text>
+                            
+                            {
+                                signInLoading 
+                                ?
+                                <HStack space={2} justifyContent="center">
+                                    <Spinner accessibilityLabel="Loading posts" color="white"/>
+                                    <Heading color="white" fontSize="md">
+                                        Loading
+                                    </Heading>
+                                </HStack>
+                                :
+                                <Text style = {{color : 'white'}} >SIGN IN</Text>
+
+                            }
                         </Pressable>
 
                         <HStack mt="6" justifyContent="flex-start">

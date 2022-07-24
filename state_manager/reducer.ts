@@ -1,3 +1,4 @@
+import { LOGIN, LOGOUT, UPDATE_USER } from "./constants"
 import { PayLoad } from "./interfaces"
 
 
@@ -11,9 +12,19 @@ export const reducer = (state : any,action : PayLoad)=>{
 
 
     switch(action.type){
-        case "LOGIN":
+        case LOGIN:
             return {
                 ...state, user : action.payload
+            }
+
+        case LOGOUT:
+            return {
+                user : null
+            }
+
+        case UPDATE_USER:
+            return {
+                user : action.payload
             }
 
         default:

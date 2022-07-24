@@ -1,15 +1,17 @@
-import { FormControl, HStack, Input, Link, Text, VStack , Pressable, Radio, Stack, View, useToast} from 'native-base'
+import { FormControl, HStack, Input, Link, Text, VStack , Pressable, Radio, Stack, View, useToast, Spinner, Heading, Toast} from 'native-base'
 import React, { useEffect, useState } from 'react'
 import { StyleSheet } from 'react-native';
 import { axiosInstance } from '../state_manager/axios';
 import { LOGIN } from '../state_manager/constants';
 import { useStateValue } from '../state_manager/contextApi';
 import { UserProfile } from '../state_manager/interfaces';
+import { addUserToDB } from '../state_manager/local_db';
 
 function RegistrationForm({navigation, isAWorker}: {navigation : any, isAWorker : boolean}) {
 
     const initState:UserProfile = {fullName : "",age : "",gender : "", location : "",phoneNumber : "", password : ""}
     const [userInput, setUserInput] = useState<UserProfile>(initState);
+    const [cPassword, setCPassword] = useState<string>();
     const [isSignUpLoading, setIsSignUpLoading] = useState(false);
     const toast = useToast();
     const {state : {user}, dispatch} = useStateValue();
@@ -20,7 +22,7 @@ function RegistrationForm({navigation, isAWorker}: {navigation : any, isAWorker 
         if(user){
             user.isAWorker 
             ? 
-            navigation.replace('WorkerHome') 
+            navigation.replace('WorkerLayout') 
             : 
             navigation.replace('ClientLayout')
         }
@@ -29,6 +31,13 @@ function RegistrationForm({navigation, isAWorker}: {navigation : any, isAWorker 
 
     const handleSignUp = async()=>{
         setIsSignUpLoading(true);
+
+        if(userInput.password !== cPassword){
+            Toast.show({title : "Passwords must match"})
+            setIsSignUpLoading(false);
+            return
+        }
+
         await axiosInstance.post("/auth/user/register",{...userInput, isAWorker })
         .then((res : any)=>{
             console.log("Reg res: ", res.data)
@@ -38,7 +47,7 @@ function RegistrationForm({navigation, isAWorker}: {navigation : any, isAWorker 
                 toast.show({title : data.msg , backgroundColor : "primary.900", fontWeight : 'normal'})
                 return
             }
-
+            addUserToDB(data, Toast);
             dispatch({type : LOGIN, payload : data})
             setIsSignUpLoading(false)
         })
@@ -51,6 +60,7 @@ function RegistrationForm({navigation, isAWorker}: {navigation : any, isAWorker 
         <FormControl>
             <FormControl.Label isRequired>Full Name</FormControl.Label>
             <Input 
+            value={userInput.fullName}
             onChangeText={(val)=>{ setUserInput({...userInput,fullName : val})}}
             borderRadius={12} color = {'black.100'} />
         </FormControl>
@@ -58,6 +68,7 @@ function RegistrationForm({navigation, isAWorker}: {navigation : any, isAWorker 
         <FormControl>
             <FormControl.Label>Age</FormControl.Label>
             <Input 
+            value={userInput.age}
             keyboardType='numeric'
             onChangeText={(val)=>{ setUserInput({...userInput,age : val})}}
             borderRadius={12} color = {'black.100'} />
@@ -66,6 +77,7 @@ function RegistrationForm({navigation, isAWorker}: {navigation : any, isAWorker 
         <FormControl isRequired>
             <FormControl.Label>Phone Number</FormControl.Label>
             <Input 
+            value={userInput.phoneNumber}
             onChangeText={(val)=>{ setUserInput({...userInput,phoneNumber : val})}}
             maxLength={10}
             borderRadius={12} keyboardType = 'numeric' color = {'black.100'} />
@@ -74,13 +86,13 @@ function RegistrationForm({navigation, isAWorker}: {navigation : any, isAWorker 
         {/* gender goes here */}
         <FormControl isRequired>
             <FormControl.Label>Gender</FormControl.Label>
-            <Radio.Group name='gender' onChange={(val)=>{ setUserInput({...userInput, gender : val})}}>
+            <Radio.Group name='gender' defaultValue="Male" value={userInput.gender} >
                 <Stack direction={{base : 'row'}}  >
-                    <Radio color = {'primary'} value="male" my={1} >
+                    <Radio color = {'primary'}   value="Male" my={1} >
                         Male
                     </Radio>
                     <View width={5}></View>
-                    <Radio value="female" my={1}>
+                    <Radio value="Female" my={2}>
                         Female
                     </Radio>
                 </Stack>
@@ -96,6 +108,7 @@ function RegistrationForm({navigation, isAWorker}: {navigation : any, isAWorker 
                 <FormControl isRequired>
                     <FormControl.Label>Ghana Card Number</FormControl.Label>
                     <Input 
+                    value={userInput.ghanaCardNumber}
                     onChangeText={(val)=>{ setUserInput({...userInput,ghanaCardNumber : val})}}
                     borderRadius={12} color = {'black.100'} />
                 </FormControl>
@@ -105,6 +118,7 @@ function RegistrationForm({navigation, isAWorker}: {navigation : any, isAWorker 
         <FormControl>
             <FormControl.Label>Location</FormControl.Label>
             <Input 
+            value={userInput.location}
             onChangeText={(val)=>{ setUserInput({...userInput,location : val})}}
             borderRadius={12} color = {'black.100'} />
         </FormControl>
@@ -112,6 +126,7 @@ function RegistrationForm({navigation, isAWorker}: {navigation : any, isAWorker 
         <FormControl>
             <FormControl.Label>Password</FormControl.Label>
             <Input 
+            value={userInput.password}
             onChangeText={(val)=>{ setUserInput({...userInput,password : val})}}
             type="password"  borderRadius={12} color = {'black.100'}/>
         </FormControl>
@@ -119,15 +134,25 @@ function RegistrationForm({navigation, isAWorker}: {navigation : any, isAWorker 
         <FormControl>
             <FormControl.Label>Confirm Password</FormControl.Label>
             <Input 
-            onChangeText={(val)=>{ setUserInput({...userInput,password : val})}}
+            value={cPassword}
+            onChangeText={(val)=>{ setCPassword(val)}}
             type="password"  borderRadius={12} color = {'black.100'}/>
-            <Link _text={{ fontSize: "xs",fontWeight: "500", color: 'primary.900' , textDecoration : 'none' }} alignSelf="flex-end" mt="1">
-                Forget Password?
-            </Link>
         </FormControl>
 
         <Pressable onPress={handleSignUp} mt={'2'} style = {styles.sign_up_btn} backgroundColor = 'primary.900'>
-            <Text style = {{color : 'white'}} >{isSignUpLoading ? 'LOADING...' : 'SIGN UP' }</Text>
+            
+            {
+                isSignUpLoading
+                ?
+                <HStack space={2} justifyContent="center">
+                    <Spinner accessibilityLabel="Loading posts" color="white"/>
+                    <Heading color="white" fontSize="md">
+                        Loading
+                    </Heading>
+                </HStack>
+                :
+                <Text style = {{color : 'white'}} >SIGN UP</Text>
+            }
         </Pressable>
 
         <HStack mt="6" justifyContent="flex-start">

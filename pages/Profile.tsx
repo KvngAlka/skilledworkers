@@ -1,7 +1,6 @@
 import Ionicons from '@expo/vector-icons/Ionicons'
-import { Center, Heading, HStack, Icon, ScrollView, Text, View } from 'native-base'
+import { Center, Heading, HStack, Icon, ScrollView, Text, View , Pressable, Box} from 'native-base'
 import React from 'react'
-import { Pressable } from 'react-native'
 import { LOGOUT } from '../state_manager/constants'
 import { useStateValue } from '../state_manager/contextApi'
 
@@ -45,13 +44,18 @@ const Profile = () => {
         <ProfileTile title='Age' value={user.age} />
         <ProfileTile title='Gender' value={'23'} />
         <ProfileTile title='Phone Number' value={user.phoneNumber}/>
+        {
+          user.isAWorker && <ProfileTile title='Ghana Card Number' value={user?.ghanaCardNumber || "--"}/>
+        }
         <ProfileTile title='Location' value={user.location} />
         <ProfileTile title='Online' value={`${user.isOnline}`} />
 
 
-        <Pressable onPress={()=> dispatch({type : LOGOUT})}>
+        <Pressable  padding={3} onPress={()=> dispatch({type : LOGOUT})}>
           <Text>Logout</Text>
         </Pressable>
+
+        <Box height={30}></Box>
 
        
     </ScrollView>

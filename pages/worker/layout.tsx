@@ -30,7 +30,7 @@ const WorkerLayout = () => {
 
         <Tab.Screen 
         options={{tabBarIcon : ()=> <Icon as={Ionicons} name='add-circle-outline' size={'lg'} />}}
-        name="Order" component={AddSkill} />
+        name="Add Skill" component={AddSkill} />
 
 
         <Tab.Screen 

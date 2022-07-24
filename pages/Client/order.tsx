@@ -3,13 +3,14 @@ import React, { useState } from 'react'
 import { StyleSheet } from 'react-native';
 import { axiosInstance } from '../../state_manager/axios';
 import { useStateValue } from '../../state_manager/contextApi';
+import { PostProfile } from '../../state_manager/interfaces';
 
 
 
 
 const Order = () => {
 
-    const [userInput, setUserInput] = useState({title : "", description : "", location : "", workCategory : ""});
+    const [userInput, setUserInput] = useState<PostProfile>({title : "", description : "", location : "", workCategory : ""});
     const {state : {user}} = useStateValue();
     const [dataSubmitting,setDataSubmitting] = useState(false)
 

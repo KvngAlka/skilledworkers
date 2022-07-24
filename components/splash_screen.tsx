@@ -1,38 +1,27 @@
 import { StatusBar } from 'expo-status-bar';
 import { Flex, Image, useTheme, View } from 'native-base'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Pressable, StyleSheet, Text } from 'react-native';
 import PagerView from 'react-native-pager-view';
 import { useStateValue } from '../state_manager/contextApi';
+import { fetchUser } from '../state_manager/local_db';
 import Logo from './logo';
-
-
-import { useEffect } from 'react';
-import { db } from '../App';
-
-
 
 
 
 const SplashScreen = ({navigation} : {navigation : any}) => {
     const {colors} = useTheme();
-    const {state : {user}, dispatch} = useStateValue();
+    const {state : {user},dispatch} = useStateValue();
 
-   useEffect(()=>{
-        db.transaction(
-            (tx) => {
-            tx.executeSql("select * from Users", [], (_, { rows }) =>{
-                if(rows.length !== 0){
-                    // dispatch() -> set the user from the local storage
-                }
-            });
-        })
-    },[])
+        console.log("this is the user now", user)
+
+    useEffect(()=>{
+        !user && fetchUser(dispatch)
+    },[user])
+
 
     const handleNext = ()=>{
         if(!user){
-            //fetch token from local storage
-            //use token to fetch user data
             navigation.replace('SignIn')
         }
 

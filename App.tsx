@@ -7,58 +7,24 @@ import ClientLayout from './pages/Client/layout';
 import OrderDetails from './pages/Client/order_details';
 import SignIn from './pages/signin';
 import SignUp from './pages/signup';
-import DataProvider, { useStateValue } from './state_manager/contextApi';
+import DataProvider from './state_manager/contextApi';
 import { theme } from './state_manager/theme';
 
 
-import * as SQLite from "expo-sqlite";
-import { Platform } from 'react-native';
-import { useEffect } from 'react';
 import WorkerLayout from './pages/worker/layout';
-
-function openDatabase() {
-  if (Platform.OS === "web") {
-    return {
-      transaction: () => {
-        return {
-          executeSql: () => {},
-        };
-      },
-    };
-  }
-
-  const db = SQLite.openDatabase("db.db");
-  return db;
-}
+import { useEffect } from 'react';
+import { createTable } from './state_manager/local_db';
 
 
-export const db = openDatabase();
 
 
 export default function App() {
+
   const Stack = createNativeStackNavigator();
-  const {state} = useStateValue()
 
-  useEffect(() => {
-
-    const createTable = ()=>  db.transaction((tx) => {
-      tx.executeSql(
-          "CREATE TABLE IF NOT EXISTS"
-          + " Users"
-          + ` (ID INTEGER PRIMARY KEY AUTOINCREMENT,_id TEXT,accessToken Text,
-              fullName TEXT, age TEXT,gender TEXT, phoneNumber TEXT,
-              location TEXT, ghanaCardNumber TEXT,password TEXT,
-              isAWorker TEXT,isOnline TEXT, isActive TEXT
-              )`,
-          [],
-          (tx,res)=> {console.log("Table Created")},
-          (_,err)=> { console.log(err); return false}
-      )
-    })
-
-
+  useEffect(()=>{
     createTable();
-  }, []);
+  },[])
 
   return (
     <DataProvider>
