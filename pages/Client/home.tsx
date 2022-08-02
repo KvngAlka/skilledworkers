@@ -71,7 +71,7 @@ const ClientHome = ({navigation} : {navigation : any}) => {
             }
             {
                 listPosts?.map((post,i)=>{
-                    return <ClientPostTile key={i} title = {post.title} description = {post.description} navigation = {navigation} />
+                    return <ClientPostTile key={i} postData = {post} navigation = {navigation} />
                 })
             }
         </ScrollView>

@@ -7,6 +7,7 @@ import Profile from '../Profile'
 import Order from './order'
 import { Ionicons } from '@expo/vector-icons'
 import ClientHome from './home'
+import Notifications from './notifications';
 
 
 const Tab = createBottomTabNavigator();
@@ -22,19 +23,19 @@ const ClientLayout = () => {
       <Tab.Navigator  screenOptions={{headerShown : false}}>
 
         <Tab.Screen  
-        options={{tabBarIcon : ()=> <Icon  as={Ionicons} name='square' size={'lg'} color={'black'}/>  }}  
+        options={{tabBarIcon : ()=> <Icon   as={Ionicons} name='square' size={'lg'} />  }}  
         name = "Home" 
         component={ClientHome}
         />
 
         <Tab.Screen 
-        options={{tabBarIcon : ()=> <Icon as={Ionicons} name='add-circle-outline' size={'lg'} />}}
+        options={{tabBarIcon : ()=> <Icon as={Ionicons} color = "primary.600" name='add-circle-outline' size={'lg'} />}}
         name="Order" component={Order} />
 
 
         <Tab.Screen 
         options={{tabBarIcon : ()=>  <Icon as={Ionicons} name='notifications-outline' size={'lg'} />}}
-        name="Notifications" component={Order} />
+        name="Notifications" component={Notifications} />
 
 
         <Tab.Screen 

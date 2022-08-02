@@ -47,6 +47,7 @@ const SignIn = ({navigation} : {navigation : any}) => {
             }
 
             if(data){
+                console.log(data)
                 setSignLoading(false)
                 addUserToDB(data.data, Toast)
                 dispatch({type : LOGIN, payload :{ ...data.data, accessToken : data.accessToken}})

@@ -1,5 +1,6 @@
 
 import * as SQLite from "expo-sqlite";
+import { Toast } from "native-base";
 import { Dispatch } from "react";
 import { Platform } from 'react-native';
 import { LOGIN } from "./constants";
@@ -34,7 +35,7 @@ export const createTable = ()=>  db.transaction((tx) => {
         + ` (ID INTEGER PRIMARY KEY AUTOINCREMENT,_id TEXT,accessToken Text,
             fullName TEXT, age TEXT,gender TEXT, phoneNumber TEXT,
             location TEXT, ghanaCardNumber TEXT,password TEXT,
-            isAWorker TEXT,isOnline TEXT, isActive TEXT
+            isAWorker BOOLEAN,isOnline BOOLEAN, isActive BOOLEAN
             )`,
         [],
         (tx,res)=> {},
@@ -84,7 +85,7 @@ export const addUserToDB = async(userData : UserProfile, Toast : any)=>{
                 )`,
                 [],
                 (tx,res)=> {
-                    Toast.shotw({title : "User added successfully"})
+                    Toast.show({title : "User added successfully"})
                 },
                 (tx,err)=> {
                     Toast.show({title : err});
@@ -95,4 +96,15 @@ export const addUserToDB = async(userData : UserProfile, Toast : any)=>{
         })
 
     }catch(err){ console.log(err)}
+}
+
+export const deleteUser = (_id : string)=>{
+    db.transaction((tx)=> {
+        tx.executeSql(
+            `DELETE FROM Users where _id = '${_id}'`,
+            [],
+            (tx,res)=> {},
+            (tx,err) => { Toast.show({title : err.message}); return false}
+        )
+    })
 }

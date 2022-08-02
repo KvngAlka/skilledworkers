@@ -5,27 +5,25 @@ export const theme = extendTheme({
       Montserrat : {
         100: {
           normal: 'Montserrat-Light',
-          italic: 'Montserrat-LightItalic',
         },
         200: {
           normal: 'Montserrat-Light',
-          italic: 'Montserrat-LightItalic',
         },
         300: {
-          normal: 'Montserrat-Light',
-          italic: 'Montserrat-LightItalic',
+          normal: 'Montserrat_300Light',
         },
         400: {
-          normal: 'Montserrat-Regular',
-          italic: 'Montserrat-Italic',
+          normal: 'Montserrat_400Regular',
         },
         500: {
-          normal: 'Montserrat-Medium',
+          normal: 'Montserrat_500Medium',
         },
         600: {
-          normal: 'Montserrat-Medium',
-          italic: 'Montserrat-MediumItalic',
+          normal: 'Montserrat_600SemiBold',
         },
+        700 : {
+          normal : "Montserrat_700Bold"
+        }
       }
     },
     fonts: {

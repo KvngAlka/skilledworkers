@@ -23,8 +23,9 @@ const WorkerLayout = () => {
       <Tab.Navigator  screenOptions={{headerShown : false}}>
 
         <Tab.Screen  
-        options={{tabBarIcon : ()=> <Icon  as={Ionicons} name='square' size={'lg'} color={'black'}/>  }}  
+        options={{tabBarIcon : ()=> <Icon  as={Ionicons} name='square' size={'lg'} />  }}  
         name = "Home" 
+  
         component={WorkerHome}
         />
 

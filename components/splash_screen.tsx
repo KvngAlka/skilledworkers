@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { Flex, Image, useTheme, View } from 'native-base'
+import { Center, Flex, Image, useTheme, View } from 'native-base'
 import React, { useEffect } from 'react'
 import { Pressable, StyleSheet, Text } from 'react-native';
 import PagerView from 'react-native-pager-view';
@@ -7,16 +7,39 @@ import { useStateValue } from '../state_manager/contextApi';
 import { fetchUser } from '../state_manager/local_db';
 import Logo from './logo';
 
+import { 
+    useFonts,
+    Montserrat_100Thin,
+    Montserrat_200ExtraLight,
+    Montserrat_300Light,
+    Montserrat_400Regular,
+    Montserrat_500Medium,
+    Montserrat_600SemiBold,
+    Montserrat_700Bold,
+    Montserrat_800ExtraBold,
+    Montserrat_900Black,
+  } from '@expo-google-fonts/montserrat'
+
+
 
 
 const SplashScreen = ({navigation} : {navigation : any}) => {
     const {colors} = useTheme();
     const {state : {user},dispatch} = useStateValue();
 
-        console.log("this is the user now", user)
+
+    let [fontsLoaded]= useFonts({
+        Montserrat_300Light,
+        Montserrat_600SemiBold,
+        Montserrat_400Regular,
+        Montserrat_500Medium,
+        Montserrat_700Bold
+    })
 
     useEffect(()=>{
         !user && fetchUser(dispatch)
+
+        console.log(user)
     },[user])
 
 
@@ -25,12 +48,17 @@ const SplashScreen = ({navigation} : {navigation : any}) => {
             navigation.replace('SignIn')
         }
 
-        if(user)  user.isAWorker ? 
-        navigation.navigate('WorkerHome') 
-        : 
-        navigation.navigate('WorkerHome');
+        if(user){
+            if(user.isAWorker){
+                navigation.navigate('WorkerLayout') 
+            }else{
+                navigation.navigate('ClientLayout');
+            }
+        }  
+        
     }
 
+   if(!fontsLoaded) return <View><Center>App Loading...</Center></View>
 
   return (
     <View backgroundColor={colors.primary[900]}  height = {'100%'}>
@@ -114,6 +142,7 @@ const styles = StyleSheet.create({
         borderRadius : 30, 
         backgroundColor : "white",
         justifyContent : "center",
-        alignItems : "center"
+        alignItems : "center",
+        fontFamily : "Montserrat_400Regular"
     },
   });
