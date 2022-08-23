@@ -85,7 +85,7 @@ export const addUserToDB = async(userData : UserProfile, Toast : any)=>{
                 )`,
                 [],
                 (tx,res)=> {
-                    Toast.show({title : "User added successfully"})
+                    // Toast.show({title : "User added successfully"})
                 },
                 (tx,err)=> {
                     Toast.show({title : err});
@@ -97,6 +97,12 @@ export const addUserToDB = async(userData : UserProfile, Toast : any)=>{
 
     }catch(err){ console.log(err)}
 }
+
+export const updateUser = ()=>{
+    
+}
+
+
 
 export const deleteUser = (_id : string)=>{
     db.transaction((tx)=> {

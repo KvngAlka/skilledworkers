@@ -1,7 +1,7 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StatusBar } from 'expo-status-bar';
-import {  Center, NativeBaseProvider, View,  } from 'native-base';
+import {  NativeBaseProvider } from 'native-base';
 import SplashScreen from './components/splash_screen';
 import ClientLayout from './pages/Client/layout';
 import OrderDetails from './pages/Client/order_details';

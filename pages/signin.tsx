@@ -27,7 +27,7 @@ const SignIn = ({navigation} : {navigation : any}) => {
 
     useEffect(()=>{
         if(user){
-            user.isAWorker 
+            user.isAWorker === true || user.isAWorker === "true"
             ? 
             navigation.replace('WorkerLayout') 
             : 
@@ -49,7 +49,7 @@ const SignIn = ({navigation} : {navigation : any}) => {
             if(data){
                 console.log(data)
                 setSignLoading(false)
-                addUserToDB(data.data, Toast)
+                addUserToDB({ ...data.data, accessToken : data.accessToken}, Toast)
                 dispatch({type : LOGIN, payload :{ ...data.data, accessToken : data.accessToken}})
             }
         }).catch((err:any)=>{ toast.show({title : err.message}); setSignLoading(false)})

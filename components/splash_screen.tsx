@@ -37,7 +37,7 @@ const SplashScreen = ({navigation} : {navigation : any}) => {
     })
 
     useEffect(()=>{
-        !user && fetchUser(dispatch)
+        // !user && fetchUser(dispatch)
 
         console.log(user)
     },[user])

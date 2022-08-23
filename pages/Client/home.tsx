@@ -28,11 +28,8 @@ const ClientHome = ({navigation} : {navigation : any}) => {
             {headers : { "Authorization" : `Bearer ${user?.accessToken}` }} 
         )
         .then((res)=>{
-            console.log("User's post: ", res.data)
-
             const {data} = res;
             if(data.code === 400) Toast.show({'title' : data.msg})
-
             if(data.code === 201) setListPost(data.data)
 
             setPostsLoading(false)
@@ -44,13 +41,11 @@ const ClientHome = ({navigation} : {navigation : any}) => {
     const onRefresh = useCallback(() => {
         setRefreshing(true);
         fetchPosts().then(()=> setRefreshing(false))
-      },[]);
+    },[]);
 
-    useEffect(()=>{
-        
 
-        fetchPosts()
-    },[user])
+
+    useEffect(()=>{  fetchPosts() },[user])
 
 
     

@@ -23,7 +23,7 @@ const AddSkill = () => {
       {workerId : user?._id, sklills : [...skills,skillInput]}, 
       { headers : {"Authorization" : `Bearer ${user?.accessToken}`}}
     ).then((res)=>{
-      console.log("Worker add skill res: ",res)
+      console.log("Worker add skill res: ",res.data)
       setSubmitLoading(false)
     })
     .catch((err)=>{

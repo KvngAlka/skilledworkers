@@ -22,9 +22,9 @@ export interface UserProfile {
     ghanaCardNumber? : string,
     skills? : string[],
     password : string,
-    isAWorker? : Boolean,
-    isOnline? : Boolean,
-    isActive? : Boolean
+    isAWorker? : boolean | string,
+    isOnline? : boolean | string,
+    isActive? : boolean | string
 }
 
 

@@ -2,6 +2,7 @@ import { Ionicons } from '@expo/vector-icons'
 import { Center, HStack, Icon, Input, Pressable, ScrollView, Text, View } from 'native-base'
 import React, { useEffect, useState } from 'react'
 import { RefreshControl } from 'react-native'
+import WorkerJobTile from '../../components/workerjob_tile'
 import { axiosInstance } from '../../state_manager/axios'
 import { useStateValue } from '../../state_manager/contextApi'
 import { PostProfile } from '../../state_manager/interfaces'
@@ -18,7 +19,9 @@ const WorkerHome = () => {
 
   useEffect(()=>{
     fetchJobs()
-  },[])
+
+    setListJobs([{description : "You already know", location : "Tema", title : "Fix it",_id : "242342",workCategory : "Plumber"}])
+  },[listJobs])
 
 
   return (
@@ -32,6 +35,16 @@ const WorkerHome = () => {
             </HStack>
         </View>
         <ScrollView  flex={1} my={1} px={'1'} showsHorizontalScrollIndicator = {false} >
+          {
+            listJobs?.length === 0 ?
+            <Center>
+                <Text>No Data to show</Text>
+            </Center>
+            :
+            listJobs?.map((job)=> {
+              return <WorkerJobTile navigation={navigator} postData = {job} key = {job._id} />
+            })
+          }
            
         </ScrollView>
     </View>
