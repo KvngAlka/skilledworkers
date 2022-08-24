@@ -40,7 +40,6 @@ function RegistrationForm({navigation, isAWorker}: {navigation : any, isAWorker 
 
         await axiosInstance.post("/auth/user/register",{...userInput, isAWorker })
         .then((res : any)=>{
-            console.log("Reg res: ", res.data)
             const data = res.data;
             if(data.code === 400){
                 setIsSignUpLoading(false)
@@ -86,7 +85,7 @@ function RegistrationForm({navigation, isAWorker}: {navigation : any, isAWorker 
         {/* gender goes here */}
         <FormControl isRequired>
             <FormControl.Label>Gender</FormControl.Label>
-            <Radio.Group name='gender' defaultValue="Male" value={userInput.gender} >
+            <Radio.Group name='gender'  value={userInput.gender} onChange = {(val)=> {setUserInput({...userInput, gender : val})}} >
                 <Stack direction={{base : 'row'}}  >
                     <Radio color = {'primary'}   value="Male" my={1} >
                         Male

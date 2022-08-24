@@ -72,12 +72,14 @@ const SplashScreen = ({navigation} : {navigation : any}) => {
         <View flex={1} padding = {5} alignItems = {'center'}>
             <PagerView style={styles.viewPager}  initialPage={1}  showPageIndicator >
 
-                <View  flex={1} key={'1'} style = {styles.carousel_img_cont} width = '100%' height={200} >
-                    <Image style = {styles.carousel_img_cont} src={"https://cdn1.sph.harvard.edu/wp-content/uploads/sites/2020/2021/03/WHWO21-Content.jpg"}  alt="picintro1"/>
-                </View>
                 <View  flex={1} key={'2'} style = {styles.carousel_img_cont} width = '100%' height={200}>
-                    
+                    <Image style = {styles.carousel_img} source={{ uri: "https://img.freepik.com/free-vector/construction-team-working-site_74855-4775.jpg?w=2000" }} alt="Alternate Text" size="xl" />
                 </View>
+
+                <View  flex={1} key={'1'} style = {styles.carousel_img_cont} width = '100%' height={200} >
+                    <Image style = {styles.carousel_img} src={"https://cdn1.sph.harvard.edu/wp-content/uploads/sites/2020/2021/03/WHWO21-Content.jpg"}  alt="picintro1"/>
+                </View>
+                
                 <View  flex={1} key={'3'} style = {styles.carousel_img_cont} width = '100%' height={200} >
                     
                 </View>
@@ -116,6 +118,7 @@ const styles = StyleSheet.create({
         width : '100%',
         backgroundColor : 'white',
         borderRadius : 12,
+        overflow : "hidden"
     },
     carousel_img : {
         width : "100%",
@@ -125,6 +128,7 @@ const styles = StyleSheet.create({
         flexDirection : 'row',
         justifyContent : 'center',
         padding : 10,
+        
     },
     carousel_indicator : {
         width : 10,

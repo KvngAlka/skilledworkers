@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons'
 import { Center, HStack, Icon, Input, Pressable, ScrollView, Text, View } from 'native-base'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { RefreshControl } from 'react-native'
 import WorkerJobTile from '../../components/workerjob_tile'
 import { axiosInstance } from '../../state_manager/axios'
@@ -11,9 +11,12 @@ const WorkerHome = () => {
 
   const [listJobs, setListJobs] = useState<PostProfile[] | null>(null)
   const {state : {user}} = useStateValue();
+  const [postsLoading, setPostsLoading] = useState(true)
+    const [refreshing, setRefreshing] = useState(false);
 
   const fetchJobs = async()=>{
-    // await axiosInstance.get('/worker/get/listjobs', {headers : {"Authorization" : `Bearer ${user?.accessToken}`}})
+    await axiosInstance.get('/worker/get/listjobs', {headers : {"Authorization" : `Bearer ${user?.accessToken}`}})
+    .then(res => console.log(res))
   }
 
 
@@ -22,6 +25,11 @@ const WorkerHome = () => {
 
     setListJobs([{description : "You already know", location : "Tema", title : "Fix it",_id : "242342",workCategory : "Plumber"}])
   },[listJobs])
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    fetchJobs().then(()=> setRefreshing(false))
+  },[]);
 
 
   return (
@@ -34,7 +42,7 @@ const WorkerHome = () => {
                 </Pressable>
             </HStack>
         </View>
-        <ScrollView  flex={1} my={1} px={'1'} showsHorizontalScrollIndicator = {false} >
+        <ScrollView  flex={1} my={1} px={'1'} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>}  showsHorizontalScrollIndicator = {false} >
           {
             listJobs?.length === 0 ?
             <Center>

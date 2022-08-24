@@ -29,7 +29,7 @@ const ClientLayout = () => {
         />
 
         <Tab.Screen 
-        options={{tabBarIcon : ()=> <Icon as={Ionicons} color = "primary.600" name='add-circle-outline' size={'lg'} />}}
+        options={{tabBarIcon : ()=> <Icon as={Ionicons}  name='add-circle-outline' size={'lg'} />}}
         name="Order" component={Order} />
 
 

@@ -40,16 +40,16 @@ const SignIn = ({navigation} : {navigation : any}) => {
 
         await axiosInstance.post("/auth/user/login",userInput).then((res:any)=>{
             const data = res.data;
+
             if(data.code === 400){
                 toast.show({title  : data.msg, duration : 3000,fontWeight : 'normal', backgroundColor : "primary.900"});
                 setSignLoading(false)
                 return;
             }
 
-            if(data){
-                console.log(data)
+            if(data.code === 200){
                 setSignLoading(false)
-                addUserToDB({ ...data.data, accessToken : data.accessToken}, Toast)
+                // addUserToDB({ ...data.data, accessToken : data.accessToken}, Toast)
                 dispatch({type : LOGIN, payload :{ ...data.data, accessToken : data.accessToken}})
             }
         }).catch((err:any)=>{ toast.show({title : err.message}); setSignLoading(false)})

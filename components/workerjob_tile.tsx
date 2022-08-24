@@ -11,7 +11,7 @@ const WorkerJobTile = ({postData,navigation} : {postData : PostProfile, navigati
           <Image source={ {uri : url}} height = {50} width = {50} borderRadius = {12} mr={'2'} alt ="post pic"/>
           <View mr={2} flex = {1}>
               <Text fontWeight={'bold'}  color='primary.900'>{title}</Text>
-              <Text ellipsizeMode='tail' fontWeight={'normal'} color={'black.100'} maxW={300} overflowX="revert">
+              <Text ellipsizeMode='tail' fontWeight={'normal'} color={'black.100'} maxW={300} >
                   {description}
               </Text>
           </View>

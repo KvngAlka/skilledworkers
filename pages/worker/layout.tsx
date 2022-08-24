@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box,Icon,View,} from 'native-base'
+import { Box,Center,Icon,Text,View,} from 'native-base'
 import AppBar from '../../components/appbar'
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -15,12 +15,16 @@ const Tab = createBottomTabNavigator();
 
 
 const WorkerLayout = () => {
-
   return (
     <View flex={1}>
       <Box safeArea/>
       <AppBar/>
-      <Tab.Navigator  screenOptions={{headerShown : false}}>
+      <View>
+        <Center>
+        <Text>Worker Home</Text>
+        </Center>
+      </View>
+      {/* <Tab.Navigator  screenOptions={{headerShown : false}}>
 
         <Tab.Screen  
         options={{tabBarIcon : ()=> <Icon  as={Ionicons} name='square' size={'lg'} />  }}  
@@ -43,7 +47,7 @@ const WorkerLayout = () => {
         component={Profile} 
         />
         
-      </Tab.Navigator>
+      </Tab.Navigator> */}
     </View>
   )
 }
