@@ -14,6 +14,8 @@ import { theme } from './state_manager/theme';
 import WorkerLayout from './pages/worker/layout';
 import { useEffect } from 'react';
 import { createTable } from './state_manager/local_db';
+import ServiceDetail from './pages/Client/service_detail';
+import ProfileEdit from './pages/ProfileEdit';
 
 
 
@@ -46,10 +48,14 @@ export default function App() {
             <Stack.Screen name="SignUp" options={{ title : "",headerShown : false }} component={SignUp} />
 
 
+            <Stack.Screen name="ProfileEdit" options={{ title : "",headerShown : false }} component={ProfileEdit} />
+
+
 
             {/* CLIENTS ROUTE */}
             <Stack.Screen name="ClientLayout" options={{ title : "",headerShown : false }} component={ClientLayout} />
             <Stack.Screen name="OrderDetails" options={{ title : "",headerShown : false }} component={OrderDetails} />
+            <Stack.Screen name="ServiceDetails" options={{ title : "",headerShown : false }} component={ServiceDetail} />
 
 
 

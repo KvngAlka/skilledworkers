@@ -41,7 +41,7 @@ const Profile = ({navigation} : {navigation : any}) => {
         <View>
           <HStack justifyContent={'space-between'}>
             <Heading fontFamily={'body'}>Profile</Heading>
-            <Icon as={Ionicons} name='pencil-sharp' size={22} />
+            <Icon onPress={()=> navigation.navigate("ProfileEdit")} as={Ionicons} name='pencil-sharp' size={22} />
           </HStack>
         </View>
         <View width={'100%'}>
@@ -57,7 +57,7 @@ const Profile = ({navigation} : {navigation : any}) => {
 
         <ProfileTile title='Full Name' value={user.fullName} />
         <ProfileTile title='Age' value={user.age} />
-        <ProfileTile title='Gender' value={'23'} />
+        <ProfileTile title='Gender' value={user.gender} />
         <ProfileTile title='Phone Number' value={user.phoneNumber}/>
         {
           user.isAWorker && <ProfileTile title='Ghana Card Number' value={user?.ghanaCardNumber || "--"}/>

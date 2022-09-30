@@ -4,10 +4,10 @@ import AppBar from '../../components/appbar'
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Profile from '../Profile'
-import Order from './order'
 import { Ionicons } from '@expo/vector-icons'
 import ClientHome from './home'
 import Notifications from './notifications';
+import Services from './services';
 
 
 const Tab = createBottomTabNavigator();
@@ -30,7 +30,7 @@ const ClientLayout = () => {
 
         <Tab.Screen 
         options={{tabBarIcon : ()=> <Icon as={Ionicons}  name='add-circle-outline' size={'lg'} />}}
-        name="Order" component={Order} />
+        name="Order" component={Services} />
 
 
         <Tab.Screen 

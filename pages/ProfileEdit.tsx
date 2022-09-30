@@ -5,7 +5,7 @@ import { useStateValue } from '../state_manager/contextApi';
 import { UserProfile } from '../state_manager/interfaces';
 
 const ProfileEdit = () => {
-    const initState:UserProfile = {fullName : "",age : "", location : "",phoneNumber : "", password : ""}
+    const initState:UserProfile = {fullName : "",age : "", location : "",phoneNumber : "", password : "", gender : ""}
     const [userInput, setUserInput] = useState<UserProfile>(initState);
     const [isSignUpLoading, setIsSignUpLoading] = useState(false);
     const toast = useToast();
