@@ -19,7 +19,7 @@ const WorkRate = () => {
                     </View>
                 </View>
                 <Button>
-                    Continue
+                    <Text>Continue</Text>
                 </Button>
                 
             </VStack>

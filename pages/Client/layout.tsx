@@ -20,7 +20,7 @@ const ClientLayout = () => {
     <View flex={1}>
       <Box safeArea/>
       <AppBar/>
-      <Tab.Navigator  screenOptions={{headerShown : false}}>
+      <Tab.Navigator  screenOptions={{headerShown : false}}   >
 
         <Tab.Screen  
         options={{tabBarIcon : ()=> <Icon   as={Ionicons} name='square' size={'lg'} />  }}  

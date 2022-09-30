@@ -38,17 +38,20 @@ const AddSkill = () => {
 
   return (
     <View flex={1}>
-      <View backgroundColor={'white'} width = "100%">
+      <Text>Add Skill</Text>
+      {/* <View backgroundColor={'white'} width = "100%">
             <HStack p={2} alignItems='center'>
                 <Input placeholder='enter skill' value={skillInput} flex={1} mr={2} borderRadius = {12} height = {8} onChangeText = {(val)=> setSkillInput(val)} />
                 <Pressable onPress={handleSkillSubmit}  py={2} px={3} backgroundColor = 'primary.900' borderRadius={12}>
-                    {
-                      submitLoading
-                      ?
-                      <Spinner accessibilityLabel="Loading posts" color="white"/>
-                      :
-                      <Icon as={Ionicons} name="add" size={'md'} color="white" />
-                    }
+                    <Text>
+                      {
+                        submitLoading
+                        ?
+                        <Spinner accessibilityLabel="Loading posts" color="white"/>
+                        :
+                        <Icon as={Ionicons} name="add" size={'md'} color="white" />
+                      }
+                    </Text>
                 </Pressable>
             </HStack>
         </View>
@@ -65,7 +68,7 @@ const AddSkill = () => {
               </View>
             })
           }
-        </ScrollView>
+        </ScrollView> */}
         
     </View>
   )

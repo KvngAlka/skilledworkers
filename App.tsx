@@ -1,7 +1,7 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StatusBar } from 'expo-status-bar';
-import {  NativeBaseProvider } from 'native-base';
+import {  NativeBaseProvider, Text, View } from 'native-base';
 import SplashScreen from './components/splash_screen';
 import ClientLayout from './pages/Client/layout';
 import OrderDetails from './pages/Client/order_details';
@@ -16,6 +16,7 @@ import { useEffect } from 'react';
 import { createTable } from './state_manager/local_db';
 import ServiceDetail from './pages/Client/service_detail';
 import ProfileEdit from './pages/ProfileEdit';
+import { useFonts,Montserrat_400Regular, Montserrat_500Medium, Montserrat_600SemiBold  } from '@expo-google-fonts/montserrat';
 
 
 
@@ -26,6 +27,8 @@ import ProfileEdit from './pages/ProfileEdit';
 export default function App() {
 
   const Stack = createNativeStackNavigator();
+
+  const [loaded] = useFonts({MontserratR : Montserrat_400Regular, MontserratSB : Montserrat_600SemiBold})
   
 
   useEffect(()=>{
@@ -33,8 +36,12 @@ export default function App() {
   },[])
 
   
-
-  
+  // if(!loaded){
+  //   console.log("not loaded")
+  //   return <View><Text>Not Loaded</Text></View>
+    
+  // }
+         
 
   return (
     <DataProvider>

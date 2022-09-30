@@ -20,10 +20,10 @@ const Services = ({navigation} : {navigation : any}) => {
     const sObj = [
         {id : "1", serviceName : "Plumbing", imgUrl : `https://www.houseclap.com/wp-content/uploads/2021/02/ppr-work.jpeg`},
         {id : "2", serviceName : "Painting", imgUrl : `https://housesolutions.com.ng/wp-content/uploads/2018/06/building-painting-ideas-in-Nigeria.png`},
-        {id : "4", serviceName : "Gardener", },
-        {id : "3", serviceName : "Electrician"},
-        {id : "23", serviceName : "Carpentry"},
-        {id : "4e", serviceName : "Mechanic"},
+        {id : "4", serviceName : "Gardener", imgUrl : `https://bmmagazine.co.uk/wp-content/uploads/2019/06/anaya-katlego-792064-unsplash-e1560797381968.jpg`},
+        {id : "3", serviceName : "Electrician", imgUrl : `https://i.onthe.io/smngoz3os2er6t7n0g.b311cfda.jpg`},
+        {id : "23", serviceName : "Carpentry", imgUrl : `https://davidsbeenhere.com/wp-content/uploads/2021/04/video-the-most-famous-fish-market-in-ghana-eating-waakye-elmina-castle-tour-elmina-ghana-davidsbeenhere-7-980x551.jpeg`},
+        {id : "4e", serviceName : "Mechanic", imgUrl : `https://johaniautocool.com/wp-content/uploads/2020/08/DSC_4075.jpg`},
     ]
     const [services, setServices] = useState(sObj)
 
@@ -32,12 +32,12 @@ const Services = ({navigation} : {navigation : any}) => {
         const url  = `http://t1.gstatic.com/licensed-image?q=tbn:ANd9GcSK7yT-pn1UKsEGqDRiAnF_5t2kATnvy-lZIbeQh7yUUE59mkRxuR-IaYD-87FOoWDgGDYp67gjZByYCxo`
         return (
             <Pressable onPress={()=> navigation.navigate("ServiceDetails",{id : item.id})} backgroundColor = {'primary.900'} style = {styles.service_tile} >
-                <View flex={1}>
+                <View flex={1} style = {{borderRadius : 15, overflow : 'hidden'}}>
                     <Image src={item.imgUrl || url}  alt='s_img' style = {styles.service_image} />
                 </View>
                 <View p={'2'} h={10}>
                     <Center>
-                        <Text color={'white'} >{item.serviceName}</Text>
+                        <Text color={'white'} style = {{fontFamily : "MontserratR"}} >{item.serviceName}</Text>
                     </Center>
                 </View>
                 
@@ -49,8 +49,8 @@ const Services = ({navigation} : {navigation : any}) => {
   return (
         <View backgroundColor={'white'} >
             <Box  p="2" py="1" w={'full'} >
-                <Heading size="lg" pb={'3'} fontWeight="600" color= {'black.100'}  >
-                    Order Service
+                <Heading size="lg" pb={'3'} style = {{fontFamily : 'MontserratSB'}} fontWeight="600"  >
+                    Work Category
                 </Heading>
 
                 <View w={'full'} height={'92%'}>
@@ -92,11 +92,12 @@ const styles = StyleSheet.create({
         flexDirection : "column",
         flex: 1,
         overflow :'hidden',
-        borderRadius : 10,
+        borderRadius : 15,
         margin : 5
     },
     service_image : {
         width  : '100%',
-        flex : 1
+        flex : 1,
+        borderRadius : 15
     }
 })

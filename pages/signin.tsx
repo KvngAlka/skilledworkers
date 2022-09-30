@@ -68,14 +68,14 @@ const SignIn = ({navigation} : {navigation : any}) => {
         <View>
             <Center w="100%">
                 <Box safeArea p="2" py="8" w="90%" maxW="290">
-                    <Heading size="lg" fontWeight="600" color= {'black.100'}  >
+                    <Heading size="lg" fontWeight="600" color= {'black.100'}  style= {{fontFamily : "MontserratSB"}} >
                         Sign In
                     </Heading>
 
 
                     <VStack space={3} mt="5">
                         <FormControl >
-                            <FormControl.Label>Phone Number</FormControl.Label>
+                            <FormControl.Label><Text style={{fontFamily : "MontserratR"}}>Phone Number</Text></FormControl.Label>
                             <Input type='text' borderRadius={12} color = {'black.100'} 
                             keyboardType = 'numeric'
                             defaultValue=''  
@@ -83,12 +83,13 @@ const SignIn = ({navigation} : {navigation : any}) => {
                         </FormControl>
 
                         <FormControl>
-                            <FormControl.Label>Password</FormControl.Label>
+                            <FormControl.Label> <Text style={{fontFamily : "MontserratR"}}> Password</Text></FormControl.Label>
                             <Input type="password"  
                             onChangeText = {(val)=> userInput ? setUserInput({...userInput, password : val })  : setUserInput({phoneNumber : '',password : val})}
                             borderRadius={12} color = {'black.100'}/>
-                            <Link _text={{ fontSize: "xs",fontWeight: "500", color: 'primary.100' , textDecoration : 'none' }} alignSelf="flex-end" mt="1">
-                                Forget Password?
+                            <Link _text={{ fontSize: "xs", textDecoration : 'none' }} alignSelf="flex-end" mt="1">
+                                
+                                <Text color={'primary.600'} style={{fontFamily : "MontserratR",}}>Forget Password?</Text>
                             </Link>
                         </FormControl>
 
@@ -105,17 +106,17 @@ const SignIn = ({navigation} : {navigation : any}) => {
                                     </Heading>
                                 </HStack>
                                 :
-                                <Text style = {{color : 'white'}} >SIGN IN</Text>
+                                <Text style = {{color : 'white' , fontFamily: "MontserratR"}} >SIGN IN</Text>
 
                             }
                         </Pressable>
 
-                        <HStack mt="6" justifyContent="flex-start">
-                            <Text fontSize="md" color={colors.black[100]}>
+                        <HStack mt="6"  justifyContent="flex-start">
+                            <Text fontSize="md" style ={{fontFamily : "MontserratR"}} color={colors.black[100]}>
                                 Don't have an account? {" "}
                             </Text>
                             <Pressable onPress={()=> navigation.replace('SignUp')} >
-                                <Text fontWeight={'medium'} fontSize = {'sm'} color = {colors.primary[900]}>
+                                <Text style ={{fontFamily : "MontserratSB"}} fontWeight={'medium'} fontSize = {'sm'} color = {colors.primary[900]}>
                                     SIGN UP
                                 </Text>
                             </Pressable>

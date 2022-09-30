@@ -1,86 +1,123 @@
-import { FormControl, Input, Pressable, Radio, Stack, Text, useToast, View, VStack } from 'native-base'
-import React, { useState } from 'react'
+import { Ionicons } from '@expo/vector-icons';
+import { Box, Center, FormControl, Heading, Icon, Input, Pressable, Radio, ScrollView, Stack, Text, useToast, View, VStack } from 'native-base'
+import React, { useEffect, useState } from 'react'
 import { StyleSheet } from 'react-native';
 import { useStateValue } from '../state_manager/contextApi';
 import { UserProfile } from '../state_manager/interfaces';
 
-const ProfileEdit = () => {
+const ProfileEdit = ({navigation} : {navigation : any}) => {
     const initState:UserProfile = {fullName : "",age : "", location : "",phoneNumber : "", password : "", gender : ""}
     const [userInput, setUserInput] = useState<UserProfile>(initState);
-    const [isSignUpLoading, setIsSignUpLoading] = useState(false);
+    const [updateLoading, setUpdateUpLoading] = useState(false);
     const toast = useToast();
     const {state : {user}, dispatch} = useStateValue();
 
+    const updateProfile = ()=>{
+        setUpdateUpLoading(true);
+
+        console.log(userInput)
+
+        // dispatch()
+    }
+
+    useEffect(()=>{
+        if(user) setUserInput(user);
+    },[])
+
 
   return (
-    <VStack space={3} mt="5">
-        <FormControl>
-            <FormControl.Label isRequired>Full Name</FormControl.Label>
-            <Input 
-            onChangeText={(val)=>{ setUserInput({...userInput,fullName : val})}}
-            borderRadius={12} color = {'black.100'} />
-        </FormControl>
+    <ScrollView background={'white'}>
+        <Box safeArea px={'5'} py={'3'}>
+            <Pressable p={'3'}>
+              <Icon onPress={()=> navigation.goBack()} as={Ionicons} name='return-up-back-outline' size={22} />
+            </Pressable>
+        </Box>
+        <Box px={'5'}>
+            <Heading  fontFamily={'body'}>Profile Update</Heading>
+        </Box>
+        <VStack space={3} pb={'5'} px={'5'} >
+            <View width={'100%'}>
+                <Center mt={10}>
+                    <View height={150} width={150} backgroundColor={'primary.100'} borderRadius = {150} >
+                    <Center height={'100%'}>
+                        <Icon as={Ionicons} color ={'primary.900'} name='person-outline' size={60}  />
+                    </Center>
+                    </View>
+                </Center>
+            </View>
+            <FormControl>
+                <FormControl.Label isRequired>Full Name</FormControl.Label>
+                <Input 
+                value={userInput.fullName}
+                onChangeText={(val)=>{ setUserInput({...userInput,fullName : val})}}
+                borderRadius={12} color = {'black.100'} />
+            </FormControl>
 
-        <FormControl>
-            <FormControl.Label>Age</FormControl.Label>
-            <Input 
-            keyboardType='numeric'
-            onChangeText={(val)=>{ setUserInput({...userInput,age : val})}}
-            borderRadius={12} color = {'black.100'} />
-        </FormControl>
+            <FormControl>
+                <FormControl.Label>Age</FormControl.Label>
+                <Input 
+                value={userInput.age}
+                keyboardType='numeric'
+                onChangeText={(val)=>{ setUserInput({...userInput,age : val})}}
+                borderRadius={12} color = {'black.100'} />
+            </FormControl>
 
-        <FormControl isRequired>
-            <FormControl.Label>Phone Number</FormControl.Label>
-            <Input 
-            onChangeText={(val)=>{ setUserInput({...userInput,phoneNumber : val})}}
-            maxLength={10}
-            borderRadius={12} keyboardType = 'numeric' color = {'black.100'} />
-        </FormControl>
+            <FormControl isRequired>
+                <FormControl.Label>Phone Number</FormControl.Label>
+                <Input 
+                value={userInput.phoneNumber}
+                onChangeText={(val)=>{ setUserInput({...userInput,phoneNumber : val})}}
+                maxLength={10}
+                borderRadius={12} keyboardType = 'numeric' color = {'black.100'} />
+            </FormControl>
 
-        {/* gender goes here */}
-        <FormControl isRequired>
-            <FormControl.Label>Gender</FormControl.Label>
-            <Radio.Group name='gender'>
-                <Stack direction={{base : 'row'}}  >
-                    <Radio color = {'primary'} value="male" my={1} >
-                        Male
-                    </Radio>
-                    <View width={5}></View>
-                    <Radio value="female" my={1}>
-                        Female
-                    </Radio>
-                </Stack>
-            </Radio.Group>
-        </FormControl>
+            {/* gender goes here */}
+            <FormControl isRequired>
+                <FormControl.Label>Gender</FormControl.Label>
+                <Radio.Group name='gender' value={userInput.age}>
+                    <Stack direction={{base : 'row'}}  >
+                        <Radio color = {'primary'} value="Male" my={1} >
+                            Male
+                        </Radio>
+                        <View width={5}></View>
+                        <Radio value="Female" my={1}>
+                            Female
+                        </Radio>
+                    </Stack>
+                </Radio.Group>
+            </FormControl>
 
-        
-
-
-        {
-            true && 
-            (
-                <FormControl isRequired>
-                    <FormControl.Label>Ghana Card Number</FormControl.Label>
-                    <Input 
-                    onChangeText={(val)=>{ setUserInput({...userInput,ghanaCardNumber : val})}}
-                    borderRadius={12} color = {'black.100'} />
-                </FormControl>
-            )
-        }
-
-        <FormControl>
-            <FormControl.Label>Location</FormControl.Label>
-            <Input 
-            onChangeText={(val)=>{ setUserInput({...userInput,location : val})}}
-            borderRadius={12} color = {'black.100'} />
-        </FormControl>
+            
 
 
+            {
+                true && 
+                (
+                    <FormControl isRequired>
+                        <FormControl.Label>Ghana Card Number</FormControl.Label>
+                        <Input 
+                        value={userInput.ghanaCardNumber}
+                        onChangeText={(val)=>{ setUserInput({...userInput,ghanaCardNumber : val})}}
+                        borderRadius={12} color = {'black.100'} />
+                    </FormControl>
+                )
+            }
 
-        <Pressable onPress={()=>{}} mt={'2'} style = {styles.sign_up_btn} backgroundColor = 'primary.100'>
-            <Text style = {{color : 'white'}} >{isSignUpLoading ? 'LOADING...' : 'UPDATE' }</Text>
-        </Pressable>
-    </VStack>
+            <FormControl>
+                <FormControl.Label>Location</FormControl.Label>
+                <Input 
+                value={userInput.location}
+                onChangeText={(val)=>{ setUserInput({...userInput,location : val})}}
+                borderRadius={12} color = {'black.100'} />
+            </FormControl>
+
+
+
+            <Pressable onPress={updateProfile} mt={'2'} style = {styles.sign_up_btn} backgroundColor = 'primary.900'>
+                <Text style = {{color : 'white'}} >{updateLoading ? 'LOADING...' : 'UPDATE' }</Text>
+            </Pressable>
+        </VStack>
+    </ScrollView>
   )
 }
 

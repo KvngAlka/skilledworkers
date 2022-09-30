@@ -17,22 +17,22 @@ const OrderDetails = ({route} : {route : any}) => {
         <View>
             <Center w="100%">
                 <Box safeArea p="2" py="8" w="90%" >
-                    <Heading size="lg" fontWeight="600" color= {'black.100'}  >
+                    <Heading size="lg" style= {{fontFamily : "MontserratSB"}} fontWeight="600"  >
                         Order Details
                     </Heading>
 
                     <Image background={"primary.100"} my="12" borderRadius={10} alt='post_img' height={300}/>
 
-                    <Text fontWeight={'bold'}>Title</Text>
-                    <Text color={'primary.900'}>{title}</Text>
+                    <Text fontWeight={'bold'} style= {{fontFamily : "MontserratSB"}}>Title</Text>
+                    <Text color={'primary.900'} style= {{fontFamily : "MontserratR"}} >{title}</Text>
 
-                    <Text fontWeight={'bold'}>Description</Text>
-                    <Text>{description}</Text>
+                    <Text mt={'3'} fontWeight={'bold'} style= {{fontFamily : "MontserratSB"}}>Description</Text>
+                    <Text style= {{fontFamily : "MontserratR"}}>{description}</Text>
 
-                    <Text fontWeight={'bold'}>Work Category</Text>
-                    <Text >{workCategory}</Text>
+                    <Text mt={'3'} fontWeight={'bold'} style= {{fontFamily : "MontserratSB"}}>Work Category</Text>
+                    <Text  style= {{fontFamily : "MontserratR"}}>{workCategory}</Text>
 
-                    <Pressable mt={'2'} onPress = {()=> console.log('first')} style = {styles.btn} backgroundColor = 'green.600'>
+                    <Pressable mt={'3'} onPress = {()=> console.log('first')} style = {styles.btn} backgroundColor = 'green.600'>
                         <Text style = {{color : 'white'}} >PENDING</Text>
                     </Pressable>
                     <Pressable mt={'2'} onPress = {()=> console.log('first')} style = {styles.btn} backgroundColor = 'red.600'>

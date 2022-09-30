@@ -10,8 +10,8 @@ import { deleteUser } from '../state_manager/local_db'
 const ProfileTile = ({title, value} : {title : String, value : String})=>{
   return (
     <View pb={1} mt={1} borderBottomWidth={0.5} borderBottomColor='primary.900'>
-      <Text fontFamily={'heading'} fontWeight={600} >{title}</Text>
-      <Text fontFamily={'body'} fontWeight={'bold'} fontSize={20} color='primary.900'>{value}</Text>
+      <Text fontFamily={'heading'} style ={{fontFamily : 'MontserratSB'}} fontWeight={600} >{title}</Text>
+      <Text style ={{fontFamily : 'MontserratSB'}} fontWeight={'bold'} fontSize={20} color='primary.900'>{value}</Text>
     </View>
   )
 }
@@ -34,21 +34,21 @@ const Profile = ({navigation} : {navigation : any}) => {
     )
   }
 
-  if(!user) return <View>UnAuthorized</View>
+  if(!user) return <View><Text>Unauthorized</Text></View>
 
   return (
-    <ScrollView p={2} backgroundColor='white' style={{flex : 1}}>
+    <ScrollView  p={2} backgroundColor='white' style={{flex : 1}}>
         <View>
           <HStack justifyContent={'space-between'}>
-            <Heading fontFamily={'body'}>Profile</Heading>
-            <Icon onPress={()=> navigation.navigate("ProfileEdit")} as={Ionicons} name='pencil-sharp' size={22} />
+            <Heading fontFamily={'heading'} style ={{fontFamily : 'MontserratSB'}} >Profile</Heading>
+            <Icon onPress={()=> navigation.navigate("ProfileEdit")} as={Ionicons} color = {'primary.600'} name='pencil-outline' size={22} />
           </HStack>
         </View>
         <View width={'100%'}>
           <Center mt={10}>
             <View height={150} width={150} backgroundColor={'primary.100'} borderRadius = {150} >
               <Center height={'100%'}>
-                <Icon as={Ionicons} name='person-outline' size={60}  />
+                <Icon as={Ionicons} color ={'primary.900'} name='person-outline' size={60}  />
               </Center>
             </View>
           </Center>
@@ -66,8 +66,8 @@ const Profile = ({navigation} : {navigation : any}) => {
         <ProfileTile title='Online' value={`${user.isOnline}`} />
 
 
-        <Pressable  padding={3} onPress={handleLogout}>
-          <Text>Logout</Text>
+        <Pressable mt={'3'} backgroundColor={'primary.600'} borderRadius={15} padding={3} onPress={handleLogout}>
+          <Text style ={{fontFamily : 'MontserratR', color : 'white', textAlign : 'center'}}>Logout</Text>
         </Pressable>
 
         <Box height={30}></Box>

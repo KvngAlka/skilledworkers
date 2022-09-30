@@ -45,7 +45,7 @@ const ServiceDetail = ({navigation, route} : {navigation : any, route : any}) =>
           
             <Center w="100%">
                 <Box  p="2" py="1" w="90%" >
-                    <Heading size="lg" fontWeight="600" color= {'black.100'}  >
+                    <Heading size="lg" style = {{fontFamily : "MontserratSB"}} fontWeight="600"  >
                         Service Details
                     </Heading>
                 </Box>
@@ -53,14 +53,14 @@ const ServiceDetail = ({navigation, route} : {navigation : any, route : any}) =>
 
             <View p={'5'}>
               <View>
-                <Text fontSize={'18'} color = {'primary.900'}>Name</Text>
-                <Text fontWeight={'extrabold'} fontSize = {'24'}>Plumbing  Service</Text>
+                <Text fontSize={'18'} style = {{fontFamily : "MontserratSB"}}  color = {'primary.900'}>Name</Text>
+                <Text fontWeight={'extrabold'} style = {{fontFamily : "MontserratSB"}}  fontSize = {'24'}>Plumbing  Service</Text>
               </View>
 
 
               <View mt={'5'}>
-                <Text fontSize={'18'} color = {'primary.900'} >Description</Text>
-                <Text fontWeight={500} fontSize = {'20'}>
+                <Text fontSize={'18'} color = {'primary.900'} style = {{fontFamily : "MontserratSB"}}  >Description</Text>
+                <Text fontWeight={500} fontSize = {'20'} style = {{fontFamily : "MontserratR"}}  >
                 Fits and repairs the pipes, fittings, and other apparatus of water supply, sanitation, or heating systems.
                 </Text>
               </View>
@@ -68,7 +68,7 @@ const ServiceDetail = ({navigation, route} : {navigation : any, route : any}) =>
 
 
               <View mt={'5'}>
-                <Text fontSize={'18'} color = {'primary.900'}>Services</Text>
+                <Text fontSize={'18'} color = {'primary.900'} style = {{fontFamily : "MontserratSB"}} >Services</Text>
 
 
                 <Center>
@@ -92,10 +92,10 @@ const ServiceDetail = ({navigation, route} : {navigation : any, route : any}) =>
 
               <Box h={'20'}></Box>
               <Pressable mt={'2'} onPress = {()=> handleOrderSubmit} style = {styles.btn} backgroundColor = 'primary.600'>
-                  <Text style = {{color : 'white'}} >{dataSubmitting ? "ORDERING..." : "ORDER"}</Text>
+                  <Text style = {{color : 'white', fontFamily : "MontserratR"}} >{dataSubmitting ? "ORDERING..." : "ORDER"}</Text>
               </Pressable>
               <Pressable mt={'4'} onPress = {()=> navigation.goBack()} style = {styles.btn}  borderWidth = '1' borderColor = 'primary.900'>
-                  <Text style = {{color : 'blue'}} >CANCEL</Text>
+                  <Text style = {{color : 'blue', fontFamily : "MontserratR"}} >CANCEL</Text>
               </Pressable>
 
             </View>

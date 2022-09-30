@@ -96,7 +96,7 @@ const SplashScreen = ({navigation} : {navigation : any}) => {
        <View alignItems={'center'} style = {styles.btn_cont}>
             <Pressable onPress={handleNext} style = {styles.btn}>
                 <View width={'100%'} maxWidth={500} alignItems = "center">
-                    <Text style = {{color : colors.primary[900], fontWeight : '400', fontSize : 20}}>GET STARTED</Text>
+                    <Text style = {{color : colors.primary[900], fontWeight : '400', fontSize : 20, fontFamily : 'MontserratR'}}>GET STARTED</Text>
                 </View>
             </Pressable>
        </View>

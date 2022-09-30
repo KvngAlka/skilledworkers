@@ -23,7 +23,7 @@ const WorkerHome = () => {
   useEffect(()=>{
     fetchJobs()
 
-    setListJobs([{description : "You already know", location : "Tema", title : "Fix it",_id : "242342",workCategory : "Plumber"}])
+    // setListJobs([{description : "You already know", location : "Tema", title : "Fix it",_id : "242342",workCategory : "Plumber"}])
   },[listJobs])
 
   const onRefresh = useCallback(() => {
@@ -32,9 +32,12 @@ const WorkerHome = () => {
   },[]);
 
 
+  if(postsLoading) return <View> </View>
+
   return (
     <View>
-        <View backgroundColor={'white'} width = "100%">
+      <Text>Home</Text>
+        {/* <View backgroundColor={'white'} width = "100%">
             <HStack p={2} alignItems='center'>
                 <Input placeholder='Search posts' flex={1} mr={2} borderRadius = {12} height = {8}/>
                 <Pressable  py={2} px={3} backgroundColor = 'primary.900' borderRadius={12}>
@@ -54,7 +57,7 @@ const WorkerHome = () => {
             })
           }
            
-        </ScrollView>
+        </ScrollView> */}
     </View>
   )
 }

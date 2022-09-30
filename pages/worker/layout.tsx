@@ -19,21 +19,17 @@ const WorkerLayout = () => {
     <View flex={1}>
       <Box safeArea/>
       <AppBar/>
-      <View>
-        <Center>
-        <Text>Worker Home</Text>
-        </Center>
-      </View>
-      {/* <Tab.Navigator  screenOptions={{headerShown : false}}>
+      <Tab.Navigator  screenOptions={{headerShown : false}}>
 
-        <Tab.Screen  
-        options={{tabBarIcon : ()=> <Icon  as={Ionicons} name='square' size={'lg'} />  }}  
-        name = "Home" component={WorkerHome}
-        />
+        {/* <Tab.Screen  
+        options={{tabBarIcon : ()=> <Icon   as={Ionicons} name='square' size={'lg'} />  }}  
+        name = "Home" 
+        component={WorkerHome}
+        /> */}
 
         <Tab.Screen 
-        options={{tabBarIcon : ()=> <Icon as={Ionicons} name='add-circle-outline' size={'lg'} />}}
-        name="Add Skill" component={AddSkill} />
+        options={{tabBarIcon : ()=> <Icon as={Ionicons}  name='add-circle-outline' size={'lg'} />}}
+        name="Order" component={AddSkill} />
 
 
         <Tab.Screen 
@@ -47,7 +43,7 @@ const WorkerLayout = () => {
         component={Profile} 
         />
         
-      </Tab.Navigator> */}
+      </Tab.Navigator>
     </View>
   )
 }
