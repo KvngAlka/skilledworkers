@@ -5,7 +5,7 @@ const Notifications = () => {
   return (
     <ScrollView>
         <Text>
-            Nifakdskjnsjd
+            Notification
         </Text>
 
     </ScrollView>

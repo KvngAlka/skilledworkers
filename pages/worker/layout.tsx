@@ -15,11 +15,39 @@ const Tab = createBottomTabNavigator();
 
 
 const WorkerLayout = () => {
+
+  const listTabs = [
+    { route : "Home", label : "Home",  iconName : "square", component : WorkerHome},
+    { route : "Order", label : "Order",  iconName : "add-circle-outline",  component : AddSkill},
+    { route : "Notification", label : "Notification",  iconName : "notifications-outline",  component : Notifications },
+    { route : "Profile", label : "Profile",  iconName : "person-outline",  component : Profile}
+  ]
+
+  
   return (
     <View flex={1}>
       <Box safeArea/>
       <AppBar/>
-      <Tab.Navigator  screenOptions={{headerShown : false}}>
+      <Tab.Navigator  screenOptions={{headerShown : false,tabBarStyle : {
+        height : 60,
+        borderRadius : 10
+      }}}>
+
+        {
+            listTabs.map((tabData, i)=>{
+              return (
+                <Tab.Screen 
+                name={tabData.route}
+                component = {tabData.component}
+                options={{
+                  tabBarIcon : ({color, focused})=> 
+                  <Icon as={Ionicons} color = {focused ? 'primary.600' : 'gray.500'} name={tabData.iconName} size={'lg'} /> , 
+                  tabBarShowLabel : false ,
+                }}
+                />
+              )
+            })
+          }
 
         {/* <Tab.Screen  
         options={{tabBarIcon : ()=> <Icon   as={Ionicons} name='square' size={'lg'} />  }}  
@@ -27,7 +55,7 @@ const WorkerLayout = () => {
         component={WorkerHome}
         /> */}
 
-        <Tab.Screen 
+        {/* <Tab.Screen 
         options={{tabBarIcon : ()=> <Icon as={Ionicons}  name='add-circle-outline' size={'lg'} />}}
         name="Order" component={AddSkill} />
 
@@ -41,7 +69,7 @@ const WorkerLayout = () => {
         options={{tabBarIcon : ()=> <Icon as ={Ionicons} name='person-outline' size={'lg'} /> }} 
         name="Profile" 
         component={Profile} 
-        />
+        /> */}
         
       </Tab.Navigator>
     </View>

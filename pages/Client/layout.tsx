@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Box,Icon,useTheme, View,} from 'native-base'
+import { Box,Icon,Pressable,Text,useTheme, View,} from 'native-base'
 import AppBar from '../../components/appbar'
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -12,6 +12,14 @@ import Services from './services';
 
 const Tab = createBottomTabNavigator();
 
+const listTabs = [
+  { route : "Home", label : "Home",  iconName : "square", component : ClientHome},
+  { route : "Order", label : "Order",  iconName : "add-circle-outline",  component : Services},
+  { route : "Notification", label : "Notification",  iconName : "notifications-outline",  component : Notifications },
+  { route : "Profile", label : "Profile",  iconName : "person-outline",  component : Profile}
+]
+
+
 
 
 const ClientLayout = () => {
@@ -20,30 +28,28 @@ const ClientLayout = () => {
     <View flex={1}>
       <Box safeArea/>
       <AppBar/>
-      <Tab.Navigator  screenOptions={{headerShown : false}}   >
-
-        <Tab.Screen  
-        options={{tabBarIcon : ()=> <Icon   as={Ionicons} name='square' size={'lg'} />  }}  
-        name = "Home" 
-        component={ClientHome}
-        />
-
-        <Tab.Screen 
-        options={{tabBarIcon : ()=> <Icon as={Ionicons}  name='add-circle-outline' size={'lg'} />}}
-        name="Order" component={Services} />
+      <Tab.Navigator  screenOptions={{headerShown : false, tabBarStyle : {
+        height : 60,
+        borderRadius : 10
+      }}} >
 
 
-        <Tab.Screen 
-        options={{tabBarIcon : ()=>  <Icon as={Ionicons} name='notifications-outline' size={'lg'} />}}
-        name="Notifications" component={Notifications} />
+        {
+          listTabs.map((tabData, i)=>{
+            return (
+              <Tab.Screen 
+              name={tabData.route}
+              component = {tabData.component}
+              options={{
+                tabBarIcon : ({color, focused})=> 
+                <Icon as={Ionicons} color = {focused ? 'primary.600' : 'gray.500'} name={tabData.iconName} size={'lg'} /> , 
+                tabBarShowLabel : false ,
+              }}
+              />
+            )
+          })
+        }
 
-
-        <Tab.Screen 
-        options={{tabBarIcon : ()=> <Icon as ={Ionicons} name='person-outline' size={'lg'} /> }} 
-        name="Profile" 
-        component={Profile} 
-        />
-        
       </Tab.Navigator>
     </View>
   )

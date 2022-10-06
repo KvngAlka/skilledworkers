@@ -27,8 +27,8 @@ const ProfileEdit = ({navigation} : {navigation : any}) => {
 
   return (
     <ScrollView background={'white'}>
-        <Box safeArea px={'5'} py={'3'}>
-            <Pressable p={'3'}>
+        <Box safeArea px={'5'} py={'3'}  >
+            <Pressable p={'3'} borderColor = {'black.100'} borderWidth = {1} borderRadius = {15} >
               <Icon onPress={()=> navigation.goBack()} as={Ionicons} name='return-up-back-outline' size={22} />
             </Pressable>
         </Box>
