@@ -38,6 +38,7 @@ const ClientLayout = () => {
           listTabs.map((tabData, i)=>{
             return (
               <Tab.Screen 
+              key={i}
               name={tabData.route}
               component = {tabData.component}
               options={{

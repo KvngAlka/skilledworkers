@@ -37,6 +37,7 @@ const WorkerLayout = () => {
             listTabs.map((tabData, i)=>{
               return (
                 <Tab.Screen 
+                key={i}
                 name={tabData.route}
                 component = {tabData.component}
                 options={{
@@ -49,28 +50,6 @@ const WorkerLayout = () => {
             })
           }
 
-        {/* <Tab.Screen  
-        options={{tabBarIcon : ()=> <Icon   as={Ionicons} name='square' size={'lg'} />  }}  
-        name = "Home" 
-        component={WorkerHome}
-        /> */}
-
-        {/* <Tab.Screen 
-        options={{tabBarIcon : ()=> <Icon as={Ionicons}  name='add-circle-outline' size={'lg'} />}}
-        name="Order" component={AddSkill} />
-
-
-        <Tab.Screen 
-        options={{tabBarIcon : ()=>  <Icon as={Ionicons} name='notifications-outline' size={'lg'} />}}
-        name="Notifications" component={Notifications} />
-
-
-        <Tab.Screen 
-        options={{tabBarIcon : ()=> <Icon as ={Ionicons} name='person-outline' size={'lg'} /> }} 
-        name="Profile" 
-        component={Profile} 
-        /> */}
-        
       </Tab.Navigator>
     </View>
   )
