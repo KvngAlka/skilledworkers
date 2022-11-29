@@ -14,7 +14,9 @@ const ServiceDetail = ({navigation, route} : {navigation : any, route : any}) =>
     const [service, setService]= useState({code : "",name : "", description : '', services : [{name : "", code : ''}], imgUrl : ""})
     const [serviceSelect, setServiceSelect] = useState({parencode : '', code : ""})
 
-    const { id }: any = route.params
+    const { id, imgUrl, parentName, description }: any = route.params
+
+    console.log(route.params)
 
 
     const handleOrderSubmit = async()=>{
@@ -37,7 +39,7 @@ const ServiceDetail = ({navigation, route} : {navigation : any, route : any}) =>
         {code : id},
         {headers : { "Authorization" : `Bearer ${user?.accessToken}` }} 
         )
-      .then(res => console.log(res.data))
+      .then(res => console.log('Service Data',res.data))
       .catch(err => { Toast.show(err.message,) })
     }
 
@@ -48,10 +50,10 @@ const ServiceDetail = ({navigation, route} : {navigation : any, route : any}) =>
 
       setService({
         code : '1',
-        imgUrl : `https://www.houseclap.com/wp-content/uploads/2021/02/ppr-work.jpeg`,
-        name : "Plumbing  Service",
-        description : "Fits and repairs the pipes, fittings, and other apparatus of water supply, sanitation, or heating systems.",
-        services : [{name : "Fix pipes in room",  code : '1'}]
+        imgUrl : imgUrl || ``,
+        name : `${parentName} Service` || "",
+        description : description || "",
+        services : [{name : "Fix pipes in room",  code : '1'}, {name : "Tank Loading",  code : '1'}]
       })
     },[])
   return (
@@ -106,11 +108,11 @@ const ServiceDetail = ({navigation, route} : {navigation : any, route : any}) =>
                         )
                       })
                     }
-                      <Select.Item label="Interior plumbing" value="ux" />
+                      {/* <Select.Item label="Interior plumbing" value="ux" />
                       <Select.Item label="Outer Plumbing" value="web" />
                       <Select.Item label="Cross Platform Development" value="cross" />
                       <Select.Item label="UI Designing" value="ui" />
-                      <Select.Item label="Backend Development" value="backend" />
+                      <Select.Item label="Backend Development" value="backend" /> */}
                     </Select>
                     {/* <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>
                       Please make a selection!

@@ -69,8 +69,8 @@ const SplashScreen = ({navigation} : {navigation : any}) => {
         </View>
 
         
-        <View flex={1} padding = {5} alignItems = {'center'}>
-            <PagerView style={styles.viewPager}  initialPage={1}  showPageIndicator >
+        <View flex={1} padding = {0} marginTop = {10} alignItems = {'center'}>
+            <PagerView style={styles.viewPager} pageMargin = {15}   initialPage={1}  showPageIndicator >
 
                 <View  flex={1} key={'2'} style = {styles.carousel_img_cont} width = '100%' height={200}>
                     <Image style = {styles.carousel_img} source={{ uri: "https://img.freepik.com/free-vector/construction-team-working-site_74855-4775.jpg?w=2000" }} alt="Alternate Text" size="xl" />
@@ -81,7 +81,7 @@ const SplashScreen = ({navigation} : {navigation : any}) => {
                 </View>
                 
                 <View  flex={1} key={'3'} style = {styles.carousel_img_cont} width = '100%' height={200} >
-                    
+                    <Image style = {styles.carousel_img} src={"https://us.123rf.com/450wm/freeslab/freeslab2010/freeslab201000923/157234564-handyman-services-vector-illustration-concept-can-use-for-web-banner-infographics-hero-images-flat-i.jpg?ver=6"}  alt="picintro1"/>
                 </View>
                
 
@@ -112,13 +112,13 @@ export default SplashScreen
 const styles = StyleSheet.create({
     viewPager : {
         flex : 1,
-        width : "100%",
+        width : "90%",
     },
     carousel_img_cont : {
         width : '100%',
         backgroundColor : 'white',
         borderRadius : 12,
-        overflow : "hidden"
+        overflow : "hidden",
     },
     carousel_img : {
         width : "100%",

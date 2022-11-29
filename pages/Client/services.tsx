@@ -38,7 +38,7 @@ const Services = ({navigation} : {navigation : any}) => {
 
     const ServiceTile = ({item} : {item : any})=>{
         return (
-            <Pressable onPress={()=> navigation.navigate("ServiceDetails",{id : item.code})} backgroundColor = {'primary.900'} style = {styles.service_tile} >
+            <Pressable onPress={()=> navigation.navigate("ServiceDetails",{id : item.code, imgUrl : item.imgUrl, parentName : item.name, description : item.description})} backgroundColor = {'primary.900'} style = {styles.service_tile} >
                 <View flex={1} style = {{borderRadius : 15, overflow : 'hidden'}}>
                     <Image src={item.imgUrl}  alt='s_img' style = {styles.service_image} />
                 </View>

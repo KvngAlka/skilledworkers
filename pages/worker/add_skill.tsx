@@ -1,5 +1,5 @@
 import { Ionicons } from '@expo/vector-icons'
-import { HStack, Icon, Input, Pressable, ScrollView, Spinner, Text, Toast, View } from 'native-base'
+import { CheckIcon, FormControl, HStack, Icon, Input, Pressable, ScrollView, Select, Spinner, Text, Toast, View } from 'native-base'
 import React, { useState } from 'react'
 import { axiosInstance } from '../../state_manager/axios'
 import { useStateValue } from '../../state_manager/contextApi'
@@ -8,7 +8,9 @@ const AddSkill = () => {
   const {state : {user}} = useStateValue();
   const [skillInput, setSkillInput] = useState<string>();
   const skills = user?.skills || [];
+  const [services, setServices]= useState([{code : "", name : ""}])
   const [submitLoading, setSubmitLoading] = useState<boolean>(false);
+  const [serviceSelect, setServiceSelect] = useState({code : '', name : ""})
 
   const handleSkillSubmit = async()=>{
 
@@ -33,6 +35,14 @@ const AddSkill = () => {
     
   }
 
+  const fetchServices = async()=>{
+    await axiosInstance.get(
+      "services/",
+      {headers : { "Authorization" : `Bearer ${user?.accessToken}` }} 
+      )
+    .then(res => console.log('Service Data',res.data))
+    .catch(err => { Toast.show(err.message,) })
+  }
 
 
 
@@ -56,6 +66,25 @@ const AddSkill = () => {
         </View> */}
 
         <View  style = {{display : 'flex', width : '100%', justifyContent : 'flex-end', backgroundColor : 'white'}}  >
+        <View mt={'5'}>
+                <Text fontSize={'14'} color = {'primary.900'} style = {{fontFamily : "MontserratSB"}} >Services</Text>
+
+
+                  <FormControl isRequired >
+                    <Select minWidth="200" onValueChange={(val)=> setServiceSelect({...serviceSelect, code : val})} accessibilityLabel="Choose Service to order" placeholder="Choose Service" _selectedItem={{
+                    bg: "primary.600",
+                    endIcon: <CheckIcon size={5} />
+                  }} mt="2">
+                    {
+                      services?.map((_subservice, i)=>{
+                        return (
+                          <Select.Item  key={i} label={_subservice.name} value={_subservice.code} />
+                        )
+                      })
+                    }
+                    </Select>
+                  </FormControl>
+              </View>
           <Pressable onPress={handleSkillSubmit} style = {{width : 40, height : 10, marginRight : 3, marginLeft : 'auto'}}   py={2} px={3} backgroundColor = 'primary.900' borderRadius={20}>
               <Text>
                 <Icon as={Ionicons} name="add" size={'md'} color="white" />
