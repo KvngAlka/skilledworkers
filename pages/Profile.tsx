@@ -59,9 +59,7 @@ const Profile = ({navigation} : {navigation : any}) => {
         <ProfileTile title='Age' value={user.age} />
         <ProfileTile title='Gender' value={user.gender} />
         <ProfileTile title='Phone Number' value={user.phoneNumber}/>
-        {
-          user.isAWorker && <ProfileTile title='Ghana Card Number' value={user?.ghanaCardNumber || "--"}/>
-        }
+        <ProfileTile title='Ghana Card Number' value={user?.ghanaCardNumber || "--"}/>
         <ProfileTile title='Location' value={user.location} />
         <ProfileTile title='Online' value={`${user.isOnline}`} />
 

@@ -10,7 +10,7 @@ import { PostProfile } from '../../state_manager/interfaces';
 
 const Order = () => {
 
-    const [userInput, setUserInput] = useState<PostProfile>({serviceName : "", description : "", location : "", workCategory : ""});
+    const [userInput, setUserInput] = useState<PostProfile>({serviceName : "", description : "", location : ""});
     const {state : {user}} = useStateValue();
     const [dataSubmitting,setDataSubmitting] = useState(false)
 
@@ -21,7 +21,7 @@ const Order = () => {
             console.log("Submit res",res.data);
             
             Toast.show({title : "Successfully Posted Order"})
-            setUserInput({serviceName : "",description : "",location : "",workCategory : ""})
+            setUserInput({serviceName : "",description : "",location : "",})
             setDataSubmitting(false)
         })
         .catch((err:any)=>{Toast.show({title : `${err.message}`});console.log('Err',err); setDataSubmitting(false)})
@@ -52,13 +52,6 @@ const Order = () => {
                             autoCompleteType={undefined}/>
                         </FormControl>
 
-                        <FormControl >
-                            <FormControl.Label>Work Category</FormControl.Label>
-                            <Input type='text' borderRadius={12} color = {'black.100'} 
-                            defaultValue=''
-                            value = {userInput?.workCategory}   
-                            onChangeText = {(val)=> userInput && setUserInput({...userInput, workCategory : val })} />
-                        </FormControl>
 
                         <FormControl >
                             <FormControl.Label>Location</FormControl.Label>

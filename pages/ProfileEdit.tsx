@@ -3,6 +3,7 @@ import { Box, Center, FormControl, Heading, Icon, Input, Pressable, Radio, Scrol
 import React, { useEffect, useState } from 'react'
 import { StyleSheet } from 'react-native';
 import { axiosInstance } from '../state_manager/axios';
+import { UPDATE_USER } from '../state_manager/constants';
 import { useStateValue } from '../state_manager/contextApi';
 import { UserProfile } from '../state_manager/interfaces';
 
@@ -15,18 +16,30 @@ const ProfileEdit = ({navigation} : {navigation : any}) => {
 
     const updateProfile = async()=>{
         setUpdateUpLoading(true);
+        await axiosInstance.put('/user/profile/edit',{_id : user?._id,...userInput}, {headers : {"Authorization" : `Bearer ${user?.accessToken}`}})
+        .then(res => {
 
-        //  user/profile/edit - endpoint
+            if(res.status === 200){
+                dispatch({type : UPDATE_USER, payload : res.data.data})
+                toast.show({title : res.data.msg});
+                setUpdateUpLoading(false)
+                return;
+            }
 
-        await axiosInstance.post('/user/profile/edit',userInput, {headers : {"Authorization" : `Bearer ${user?.accessToken}`}})
 
-        console.log(userInput)
-
-        // dispatch()
+            toast.show({title : res.data.msg})
+            setUpdateUpLoading(false)
+        })
+        .catch(err =>  toast.show({title : err}))
     }
 
     useEffect(()=>{
-        if(user) setUserInput(user);
+
+        if(user) {
+            const {fullName, ghanaCardNumber, age, phoneNumber, location, gender, password} = user;
+            setUserInput({fullName, ghanaCardNumber, age, phoneNumber, location, gender, password} );
+        }
+        
     },[])
 
 
@@ -79,7 +92,7 @@ const ProfileEdit = ({navigation} : {navigation : any}) => {
             {/* gender goes here */}
             <FormControl isRequired>
                 <FormControl.Label>Gender</FormControl.Label>
-                <Radio.Group name='gender' value={userInput.age}>
+                <Radio.Group name='gender' value={userInput.gender}>
                     <Stack direction={{base : 'row'}}  >
                         <Radio color = {'primary'} value="Male" my={1} >
                             Male

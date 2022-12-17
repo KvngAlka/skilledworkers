@@ -24,7 +24,11 @@ export const reducer = (state : any,action : PayLoad)=>{
 
         case UPDATE_USER:
             return {
-                user : action.payload
+                
+                user : {
+                    ...state.user,
+                    ...action.payload
+                }
             }
 
         default:

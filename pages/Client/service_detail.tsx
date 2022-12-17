@@ -25,8 +25,6 @@ const ServiceDetail = ({navigation, route} : {navigation : any, route : any}) =>
       setDataSubmitting(true)
       await axiosInstance.post('/post/add',{ownerId : user?._id,...serviceSelect},{headers : {"Authorization" : `Bearer ${user?.accessToken}`}})
       .then((res)=>{
-          console.log("Submit res",res.data);
-          
           Toast.show({title : "Successfully Posted Order"})
           setDataSubmitting(false)
       })
