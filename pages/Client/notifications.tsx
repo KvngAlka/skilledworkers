@@ -1,5 +1,5 @@
 import { Center, ScrollView, Text } from 'native-base'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { RefreshControl } from 'react-native';
 import NotificationTile from '../../components/notification_tile';
 
@@ -18,6 +18,11 @@ const Notifications = () => {
 
     data.then(()=>setRefreshing(false))
   }
+
+
+  useEffect(()=>{
+    
+  },[])
 
 
   return (

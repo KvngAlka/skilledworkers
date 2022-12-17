@@ -8,28 +8,30 @@ import { PostProfile } from '../../state_manager/interfaces'
 
 const ServiceDetail = ({navigation, route} : {navigation : any, route : any}) => {
   
-    const [userInput, setUserInput] = useState<PostProfile>({title : "", description : "", location : "", workCategory : ""});
+    // const [userInput, setUserInput] = useState<PostProfile>({serviceName : "", description : "", location : "",});
     const {state : {user}} = useStateValue();
     const [dataSubmitting,setDataSubmitting] = useState(false)
-    const [service, setService]= useState({code : "",name : "", description : '', services : [{name : "", code : ''}], imgUrl : ""})
-    const [serviceSelect, setServiceSelect] = useState({parencode : '', code : ""})
+
+    const [service, setService]= useState({code : "",name : "", description : '',  imgUrl : ""})
+    const [subServices, setSubServices] = useState([{code : "", price : "",  name : "",}])
+    const [serviceSelect, setServiceSelect] = useState({serviceId : '', subServiceId : ""})
+    const [indexSelect, setIndexSelect] = useState<number | null>(null)
 
     const { id, imgUrl, parentName, description }: any = route.params
 
-    console.log(route.params)
-
 
     const handleOrderSubmit = async()=>{
+
       setDataSubmitting(true)
-      await axiosInstance.post('/post/add',{ownerId : user?._id,...userInput},{headers : {"Authorization" : `Bearer ${user?.accessToken}`}})
+      await axiosInstance.post('/post/add',{ownerId : user?._id,...serviceSelect},{headers : {"Authorization" : `Bearer ${user?.accessToken}`}})
       .then((res)=>{
           console.log("Submit res",res.data);
           
           Toast.show({title : "Successfully Posted Order"})
-          setUserInput({title : "",description : "",location : "",workCategory : ""})
           setDataSubmitting(false)
       })
-      .catch((err:any)=>{Toast.show({title : `${err.message}`}); setDataSubmitting(false)})
+      .catch((err:any)=>{Toast.show({title : `${err.message}`}); console.log("Err :::", err) ;setDataSubmitting(false)})
+      
     }
 
 
@@ -39,22 +41,32 @@ const ServiceDetail = ({navigation, route} : {navigation : any, route : any}) =>
         {code : id},
         {headers : { "Authorization" : `Bearer ${user?.accessToken}` }} 
         )
-      .then(res => console.log('Service Data',res.data))
+      .then(res => {
+
+        setService({
+          code : id || ``, 
+          imgUrl : imgUrl || ``,
+          name : `${parentName} Service` || "",
+          description : description || "",
+        })
+
+        setSubServices(res.data.data)
+      })
       .catch(err => { Toast.show(err.message,) })
     }
 
 
     useEffect(()=>{
-      fetchService();
+      fetchService()
 
+      // setService({
+      //   code : id || ``, 
+      //   imgUrl : imgUrl || ``,
+      //   name : `${parentName} Service` || "",
+      //   description : description || "",
+      // })
 
-      setService({
-        code : '1',
-        imgUrl : imgUrl || ``,
-        name : `${parentName} Service` || "",
-        description : description || "",
-        services : [{name : "Fix pipes in room",  code : '1'}, {name : "Tank Loading",  code : '1'}]
-      })
+      
     },[])
   return (
     <ScrollView backgroundColor={'white'}>
@@ -97,22 +109,17 @@ const ServiceDetail = ({navigation, route} : {navigation : any, route : any}) =>
 
                 <Center>
                   <FormControl isRequired >
-                    <Select minWidth="200" onValueChange={(val)=> setServiceSelect({...serviceSelect, code : val})} accessibilityLabel="Choose Service to order" placeholder="Choose Service" _selectedItem={{
+                    <Select minWidth="200" onValueChange={(val)=> setServiceSelect({...serviceSelect,serviceId : service.code, subServiceId : val})} accessibilityLabel="Choose Service to order" placeholder="Choose Service" _selectedItem={{
                     bg: "primary.600",
                     endIcon: <CheckIcon size={5} />
                   }} mt="2">
                     {
-                      service.services?.map((_subservice, i)=>{
+                      subServices?.map((_subservice, i)=>{
                         return (
-                          <Select.Item  key={i} label={_subservice.name} value={_subservice.code} />
+                          <Select.Item   key={i} label={_subservice.name} value={_subservice.code} />
                         )
                       })
                     }
-                      {/* <Select.Item label="Interior plumbing" value="ux" />
-                      <Select.Item label="Outer Plumbing" value="web" />
-                      <Select.Item label="Cross Platform Development" value="cross" />
-                      <Select.Item label="UI Designing" value="ui" />
-                      <Select.Item label="Backend Development" value="backend" /> */}
                     </Select>
                     {/* <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>
                       Please make a selection!
@@ -121,12 +128,17 @@ const ServiceDetail = ({navigation, route} : {navigation : any, route : any}) =>
                 </Center>
               </View>
 
+              <View mt={'5'}>
+                <Text fontSize={'14'} color = {'primary.900'} style = {{fontFamily : "MontserratSB"}}  >Price</Text>
+                <Text fontWeight={500} fontSize = {'16'} style = {{fontFamily : "MontserratR"}}  >Ghc {indexSelect ? subServices[indexSelect].price : 0 }</Text>
+              </View>
+
               <Box h={'10'}></Box>
               <Pressable mt={'2'} onPress = {handleOrderSubmit} style = {styles.btn} backgroundColor = 'primary.600'>
                   <Text style = {{color : 'white', fontFamily : "MontserratR"}} >{dataSubmitting ? "ORDERING..." : "ORDER"}</Text>
               </Pressable>
               <Pressable mt={'4'} onPress = {()=> navigation.goBack()} style = {styles.btn}  borderWidth = '1' borderColor = 'primary.900'>
-                  <Text style = {{color : 'blue', fontFamily : "MontserratR"}} >CANCEL</Text>
+                  <Text style = {{color : 'blue', fontFamily : "MontserratR"}} onPress = {()=> {dataSubmitting ? setDataSubmitting(false) : navigation.goBack()}}>CANCEL</Text>
               </Pressable>
 
             </View>

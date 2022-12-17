@@ -58,7 +58,7 @@ const Services = ({navigation} : {navigation : any}) => {
             {
                 pageLoading ?
                 <Center>
-
+                    <Text>Loading...</Text>
                 </Center>
                 :
                 <Box  p="2" py="1" w={'full'} >

@@ -2,7 +2,7 @@
   "expo": {
     "name": "SkilledWorkers",
     "slug": "SkilledWorkers",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -29,6 +29,11 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "8f66db60-38f0-432e-a003-97896d73ed30"
+      }
     }
   }
 }

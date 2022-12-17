@@ -2,6 +2,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Box, Center, FormControl, Heading, Icon, Input, Pressable, Radio, ScrollView, Stack, Text, useToast, View, VStack } from 'native-base'
 import React, { useEffect, useState } from 'react'
 import { StyleSheet } from 'react-native';
+import { axiosInstance } from '../state_manager/axios';
 import { useStateValue } from '../state_manager/contextApi';
 import { UserProfile } from '../state_manager/interfaces';
 
@@ -12,8 +13,12 @@ const ProfileEdit = ({navigation} : {navigation : any}) => {
     const toast = useToast();
     const {state : {user}, dispatch} = useStateValue();
 
-    const updateProfile = ()=>{
+    const updateProfile = async()=>{
         setUpdateUpLoading(true);
+
+        //  user/profile/edit - endpoint
+
+        await axiosInstance.post('/user/profile/edit',userInput, {headers : {"Authorization" : `Bearer ${user?.accessToken}`}})
 
         console.log(userInput)
 

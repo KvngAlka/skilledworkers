@@ -22,7 +22,7 @@ const AddSkill = () => {
 
     await axiosInstance.put(
       "/user/profile/update/worker/skills",
-      {workerId : user?._id, sklills : [...skills,skillInput]}, 
+      {workerId : user?._id, serviceId : `${5}`, subServiceId : `${3}`}, 
       { headers : {"Authorization" : `Bearer ${user?.accessToken}`}}
     ).then((res)=>{
       console.log("Worker add skill res: ",res.data)

@@ -30,11 +30,14 @@ export interface UserProfile {
 
 export interface PostProfile {
     _id? :string,
-    title : string,
-    description : string,
-    location : string,
-    workCategory : string,
-    image? : any
+    name? : string,
+    serviceName : string,
+    subServiceName?: string,
+    description? : string,
+    location? : string,
+    price? : string,
+    isAccepted ?: boolean,
+    imgUrl? : any
 }
 
 export interface PayLoad {

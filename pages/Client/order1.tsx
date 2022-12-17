@@ -10,7 +10,7 @@ import { PostProfile } from '../../state_manager/interfaces';
 
 const Order = () => {
 
-    const [userInput, setUserInput] = useState<PostProfile>({title : "", description : "", location : "", workCategory : ""});
+    const [userInput, setUserInput] = useState<PostProfile>({serviceName : "", description : "", location : "", workCategory : ""});
     const {state : {user}} = useStateValue();
     const [dataSubmitting,setDataSubmitting] = useState(false)
 
@@ -21,10 +21,10 @@ const Order = () => {
             console.log("Submit res",res.data);
             
             Toast.show({title : "Successfully Posted Order"})
-            setUserInput({title : "",description : "",location : "",workCategory : ""})
+            setUserInput({serviceName : "",description : "",location : "",workCategory : ""})
             setDataSubmitting(false)
         })
-        .catch((err:any)=>{Toast.show({title : `${err.message}`}); setDataSubmitting(false)})
+        .catch((err:any)=>{Toast.show({title : `${err.message}`});console.log('Err',err); setDataSubmitting(false)})
     }
   return (
     <ScrollView backgroundColor={'white'}>
@@ -40,8 +40,8 @@ const Order = () => {
                             <FormControl.Label>Title</FormControl.Label>
                             <Input type='text' borderRadius={12} color = {'black.100'} 
                             defaultValue=''
-                            value = {userInput?.title}   
-                            onChangeText = {(val)=> userInput && setUserInput({...userInput, title : `${val}` })} />
+                            value = {userInput?.serviceName}   
+                            onChangeText = {(val)=> userInput && setUserInput({...userInput, serviceName : `${val}` })} />
                         </FormControl>
 
                         <FormControl>

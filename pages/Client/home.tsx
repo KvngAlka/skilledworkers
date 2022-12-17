@@ -29,6 +29,7 @@ const ClientHome = ({navigation} : {navigation : any}) => {
         )
         .then((res)=>{
             const {data} = res;
+            console.log(data.data)
             if(data.code === 400) Toast.show({'title' : data.msg})
             if(data.code === 201) setListPost(data.data)
 
