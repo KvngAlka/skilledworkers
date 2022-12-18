@@ -1,13 +1,13 @@
 import { Ionicons } from '@expo/vector-icons'
-import { CheckIcon, FormControl, HStack, Icon, Input, Pressable, ScrollView, Select, Spinner, Text, Toast, View } from 'native-base'
+import { CheckIcon, FormControl, HStack, Icon, Image, Input, Pressable, ScrollView, Select, Spinner, Text, Toast, View } from 'native-base'
 import React, { useEffect, useState } from 'react'
 import { axiosInstance } from '../../state_manager/axios'
 import { useStateValue } from '../../state_manager/contextApi'
+import { UserProfile } from '../../state_manager/interfaces'
 
 const AddSkill = ({navigation} : {navigation : any}) => {
   const {state : {user}} = useStateValue();
-  const [skillInput, setSkillInput] = useState<string>();
-  const skills = user?.skills || [];
+  const [skills, setSkills] = useState<UserProfile['skills'] | null>(null)
   const [services, setServices]= useState([{_id : "", code : "", name : "",   imgUrl : "", description : ""}])
   const [serviceSelect, setServiceSelect] = useState({code : '', name : ""})
 
@@ -27,6 +27,26 @@ const AddSkill = ({navigation} : {navigation : any}) => {
     .catch(err => { Toast.show(err.message,) })
   }
 
+
+  const fetchSkills = async()=>{
+
+    await axiosInstance.post(
+      "user/profile/get/worker/skills",
+      {workerId : user?._id},
+      {headers : { "Authorization" : `Bearer ${user?.accessToken}` }} 
+    )
+    .then(res => {
+
+      if(res.status === 200){
+        setSkills(res.data?.data)
+      }
+
+      console.log(":: res raw",res.data)
+    })
+    .catch(err => { console.log(err) ; Toast.show(err) })
+
+  }
+
   const handleNavigation = (code : any)=>{
     const selectedServiceDetail = services.filter(service => service.code === code); // return serivce[] with one object
     if(selectedServiceDetail.length > 0){
@@ -39,6 +59,7 @@ const AddSkill = ({navigation} : {navigation : any}) => {
 
   useEffect(()=>{
     fetchServices();
+    fetchSkills();
 
   },[])
 
@@ -81,17 +102,19 @@ const AddSkill = ({navigation} : {navigation : any}) => {
           
         </View>
 
-        <ScrollView flex={1} width = "100%" background={"gray.200"}>
+        <ScrollView flex={1} width = "100%" background={"gray.200"} p={'2'}>
           {
-            skills.map((skill,i)=>{
-              <View width="100"  backgroundColor={'red.100'} p={2} key = {i}>
-                <Text>
-                  :: kkkk
-                  {
-                    skill
-                  }
-                </Text>
-              </View>
+            skills?.map((skill,i)=>{
+              return(
+                <View w={'full'} height={20} mt={'3'}  flexDirection ={'row'} backgroundColor={'white'}  borderRadius ={'10'} p={2} key = {i}>
+                  <Image source={ {uri : skill.imgUrl}} height = {60} width = {60} borderRadius = {12} mr={'2'} alt ="post pic"/>
+                  <Text style = {{fontFamily : "MontserratSB"}}>
+                    {
+                      skill.name
+                    }
+                  </Text>
+                </View>
+              )
             })
           }
         </ScrollView>

@@ -20,7 +20,7 @@ export interface UserProfile {
     phoneNumber : string,
     location : string,
     ghanaCardNumber? : string,
-    skills? : string[],
+    skills? : Skill[],
     password : string,
     isAWorker? : boolean | string,
     isOnline? : boolean | string,
@@ -43,4 +43,12 @@ export interface PostProfile {
 export interface PayLoad {
     type : string,
     payload? : any
+}
+
+
+export interface Skill {
+    serviceId : string,
+    subServiceId : string,
+    name : string,
+    imgUrl : string
 }

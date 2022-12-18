@@ -18,6 +18,7 @@ import ServiceDetail from './pages/Client/service_detail';
 import ProfileEdit from './pages/ProfileEdit';
 import { useFonts,Montserrat_400Regular, Montserrat_500Medium, Montserrat_600SemiBold  } from '@expo-google-fonts/montserrat';
 import SkillDetail from './pages/worker/skill_details';
+import NotificationDetails from './pages/worker/notificatoin_details';
 
 
 
@@ -71,6 +72,7 @@ export default function App() {
             {/* WORKER ROUTES */}
             <Stack.Screen name="WorkerLayout" options={{ title : "",headerShown : false }} component={WorkerLayout} />
             <Stack.Screen name="SkillDetails" options={{ title : "",headerShown : false }} component={SkillDetail} />
+            <Stack.Screen name="NotificationDetails" options={{ title : "",headerShown : false }} component={NotificationDetails} />
 
 
             

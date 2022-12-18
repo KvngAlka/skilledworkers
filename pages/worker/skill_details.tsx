@@ -3,12 +3,13 @@ import { Box, Center, CheckIcon, FormControl, Heading, Icon, Image, Pressable, S
 import React, { useEffect, useState } from 'react'
 import { SafeAreaView, StyleSheet } from 'react-native'
 import { axiosInstance } from '../../state_manager/axios'
+import { UPDATE_USER } from '../../state_manager/constants'
 import { useStateValue } from '../../state_manager/contextApi'
 import { PostProfile } from '../../state_manager/interfaces'
 
 const SkillDetail = ({navigation, route} : {navigation : any, route : any}) => {
   
-    const {state : {user}} = useStateValue();
+    const {state : {user}, dispatch} = useStateValue();
     const [dataSubmitting,setDataSubmitting] = useState(false)
 
     const [service, setService]= useState({code : "",name : "", description : '',  imgUrl : ""})
@@ -42,9 +43,6 @@ const SkillDetail = ({navigation, route} : {navigation : any, route : any}) => {
 
     const handleSkillSubmit = async()=>{
 
-        console.log()
-        return
-
         if(!serviceSelect.subServiceId){
           return Toast.show({title : "Please select sub Skill"})
         }
@@ -53,16 +51,21 @@ const SkillDetail = ({navigation, route} : {navigation : any, route : any}) => {
     
         await axiosInstance.put(
           "/user/profile/update/worker/skills",
-          {workerId : user?._id, serviceId : `${5}`, subServiceId : `${3}`}, 
+          {workerId : user?._id, ...serviceSelect}, 
           { headers : {"Authorization" : `Bearer ${user?.accessToken}`}}
         ).then((res)=>{
     
           if(res.status === 200){
+            Toast.show({title : res.data.msg})
+            dispatch({type : UPDATE_USER, payload : res.data.data})
+            setDataSubmitting(false);
+            return
           }
+          Toast.show({title : res.data.msg})
           setDataSubmitting(false)
         })
         .catch((err)=>{
-          console.log(err)
+          Toast.show({title : err})
           setDataSubmitting(false)
         })
         
