@@ -31,6 +31,7 @@ export interface UserProfile {
 export interface PostProfile {
     _id? :string,
     name? : string,
+    nameOfClient? : string,
     serviceName : string,
     subServiceName?: string,
     description? : string,

@@ -24,7 +24,6 @@ const Notifications = ({navigation, route} : {navigation : any, route : any}) =>
         )
         .then((res)=>{
             const {data} = res;
-            console.log(data.data)
 
             if(data.code === 400) Toast.show({'title' : data.msg})
             if(data.code === 201) setListNotification(data.data)

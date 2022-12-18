@@ -12,7 +12,7 @@ const NotificationTile = ({postData,navigation, clientName} : {postData : PostPr
         <View mr={2} flex = {1}>
             <Text fontWeight={'bold'}  color='primary.900'>{name}</Text>
             <Text fontWeight={'bold'}  color='black'>{clientName}</Text>
-            <Text ellipsizeMode='tail' fontWeight={'normal'} color={'black.100'} maxW={300} overflowX="revert">
+            <Text ellipsizeMode='tail' fontWeight={'normal'} color={'black.100'} maxW={300}>
                 {description}
             </Text>
         </View>

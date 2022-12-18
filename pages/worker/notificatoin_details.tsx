@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar'
-import { AlertDialog, Box, Button, Center, Heading, HStack, Image, Pressable, ScrollView, Text, Toast, View, VStack } from 'native-base'
-import React from 'react'
+import { Box, Center, Heading, Image, Pressable, ScrollView, Text, Toast, View, } from 'native-base'
+import React, { useState } from 'react'
 import { StyleSheet } from 'react-native'
 import { axiosInstance } from '../../state_manager/axios'
 import { useStateValue } from '../../state_manager/contextApi'
@@ -11,26 +11,33 @@ const NotificationDetails = ({route} : {route : any}) => {
     const orderData : PostProfile = route.params;
     const clientName : string = route?.params?.clientName;
 
-    const {_id,serviceName, description,subServiceName, price,imgUrl, isAccepted} = orderData;
+    const {_id,serviceName, description,name, price,imgUrl, isAccepted, location} = orderData;
+    const [jobAccepting, setJobAccepting] = useState<boolean>(false);
     const {state : {user}} = useStateValue();
 
 
     const acceptJob = async ()=>{
 
+        setJobAccepting(true);
+
         await axiosInstance.post(
             "/post/worker/accept/post",
-            {_id , ownerId : user?._id},
+            {postId : _id , workerId : user?._id},
             {headers : { "Authorization" : `Bearer ${user?.accessToken}` }} 
             ).then(res => {
-            if(res.data.code === 200){
-                const {data} = res.data;
+            if(res.data.code === 201){
+                Toast.show({title : res.data.msg})
+                setJobAccepting(false)
                 return;
             }
 
             Toast.show({title : res.data.msg})
+            setJobAccepting(false)
             
-        }).catch(err => { console.log("::::ERR::::", err) })
+        }).catch(err => {Toast.show({title : err})})
     }
+
+
   return (
     <ScrollView>
         <StatusBar backgroundColor='white'/>
@@ -55,7 +62,10 @@ const NotificationDetails = ({route} : {route : any}) => {
                     <Text style= {{fontFamily : "MontserratR"}}>{description}</Text>
 
                     <Text mt={'3'} fontWeight={'bold'} style= {{fontFamily : "MontserratSB"}}>Service</Text>
-                    <Text  style= {{fontFamily : "MontserratR"}}>{subServiceName}</Text>
+                    <Text  style= {{fontFamily : "MontserratR"}}>{name}</Text>
+
+                    <Text mt={'3'} fontWeight={'bold'} style= {{fontFamily : "MontserratSB"}}>Location</Text>
+                    <Text  style= {{fontFamily : "MontserratR"}}>{location}</Text>
 
                     <Text mt={'3'} fontWeight={'bold'} style= {{fontFamily : "MontserratSB"}}>Price</Text>
                     <Text  style= {{fontFamily : "MontserratR"}}>Ghc{price}</Text>
@@ -64,10 +74,10 @@ const NotificationDetails = ({route} : {route : any}) => {
                     <Text  color ={ `${ isAccepted ? 'blue' : 'green.600'}` } style= {{fontFamily : "MontserratR"}}>{ isAccepted ? 'ACCEPTED' : 'PENDING'}</Text>
 
                     <View height={10}></View>
-                    <Pressable mt={'2'} onPress = {()=> {}} style = {styles.btn} backgroundColor = 'primary.600'>
-                        <Text style = {{color : 'white'}} >ACCEPT</Text>
+                    <Pressable mt={'2'} onPress = {()=> { acceptJob()}} style = {styles.btn} backgroundColor = 'primary.600'>
+                        <Text style = {{color : 'white'}} >{ jobAccepting ? 'ACCEPTING' : 'ACCEPT' }</Text>
                     </Pressable>
-                    
+
                 </Box>
             </Center>
 

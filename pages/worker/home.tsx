@@ -1,5 +1,5 @@
 import { Ionicons } from '@expo/vector-icons'
-import { Center, HStack, Icon, Input, Pressable, ScrollView, Text, View } from 'native-base'
+import { Center, HStack, Icon, Input, Pressable, ScrollView, Text, Toast, View } from 'native-base'
 import React, { useCallback, useEffect, useState } from 'react'
 import { RefreshControl } from 'react-native'
 import WorkerJobTile from '../../components/workerjob_tile'
@@ -7,25 +7,40 @@ import { axiosInstance } from '../../state_manager/axios'
 import { useStateValue } from '../../state_manager/contextApi'
 import { PostProfile } from '../../state_manager/interfaces'
 
-const WorkerHome = () => {
+const WorkerHome = ({navigation} : {navigation : any}) => {
 
   const [listJobs, setListJobs] = useState<PostProfile[] | null>(null)
   const {state : {user}} = useStateValue();
   const [postsLoading, setPostsLoading] = useState(true)
-    const [refreshing, setRefreshing] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
+
+
 
   const fetchJobs = async()=>{
+
+    setPostsLoading(true);
+
     await axiosInstance.post('post/worker/get/listjobs',{workerId : user?._id}, {headers : {"Authorization" : `Bearer ${user?.accessToken}`}})
-    .then(res => console.log(res.data))
-    .catch(err => console.log(err))
+    .then(res => {
+      console.log(res.data)
+      if(res.data.code === 200){
+        setListJobs(res.data.msg);
+        setPostsLoading(false)
+        return;
+      }
+
+      Toast.show({title : res.data.msg})
+      setPostsLoading(false);
+
+
+    })
+    .catch(err => { Toast.show({title : err});  setPostsLoading(false) })
   }
 
 
   useEffect(()=>{
     fetchJobs()
-
-    // setListJobs([{description : "You already know", location : "Tema", title : "Fix it",_id : "242342",workCategory : "Plumber"}])
-  },[listJobs])
+  },[])
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);
@@ -35,7 +50,7 @@ const WorkerHome = () => {
 
 
   return (
-    <View>
+    <View style={{flex : 1}}>
       <View backgroundColor={'white'} width = "100%">
           <HStack p={2} alignItems='center'>
               <Input placeholder='Search posts' flex={1} mr={2} borderRadius = {12} height = {8}/>
@@ -44,6 +59,7 @@ const WorkerHome = () => {
               </Pressable>
           </HStack>
       </View>
+   
       <ScrollView  flex={1} my={1} px={'1'} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>}  showsHorizontalScrollIndicator = {false} >
         {
           postsLoading && <Center><Text>Loading....</Text></Center>
@@ -55,7 +71,7 @@ const WorkerHome = () => {
           </Center>
           :
           listJobs?.map((job,i)=> {
-            return <WorkerJobTile navigation={navigator} postData = {job} key = {i} />
+            return <WorkerJobTile navigation={navigation} postData = {job} key = {i} />
           })
         }
           
