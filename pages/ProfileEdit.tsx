@@ -1,5 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
-import { Box, Center, FormControl, Heading, Icon, Input, Pressable, Radio, ScrollView, Stack, Text, useToast, View, VStack } from 'native-base'
+import { Box, Center, CheckIcon, FormControl, Heading, Icon, Input, Pressable, Radio, ScrollView, Select, Stack, Text, useToast, View, VStack } from 'native-base'
 import React, { useEffect, useState } from 'react'
 import { StyleSheet } from 'react-native';
 import { axiosInstance } from '../state_manager/axios';
@@ -31,6 +31,10 @@ const ProfileEdit = ({navigation} : {navigation : any}) => {
             setUpdateUpLoading(false)
         })
         .catch(err =>  toast.show({title : err}))
+    }
+
+    const handleGenderChange = (val : string)=>{
+        setUserInput({...userInput, gender : val})
     }
 
     useEffect(()=>{
@@ -90,19 +94,15 @@ const ProfileEdit = ({navigation} : {navigation : any}) => {
             </FormControl>
 
             {/* gender goes here */}
-            <FormControl isRequired>
-                <FormControl.Label>Gender</FormControl.Label>
-                <Radio.Group name='gender' value={userInput.gender}>
-                    <Stack direction={{base : 'row'}}  >
-                        <Radio color = {'primary'} value="Male" my={1} >
-                            Male
-                        </Radio>
-                        <View width={5}></View>
-                        <Radio value="Female" my={1}>
-                            Female
-                        </Radio>
-                    </Stack>
-                </Radio.Group>
+            <FormControl isRequired >
+            <FormControl.Label>Gender</FormControl.Label>
+                <Select minWidth="200" borderRadius={12} selectedValue = {userInput.gender} onValueChange={(val)=> handleGenderChange(val)} accessibilityLabel="Gender" placeholder="Choose Gender" _selectedItem={{
+                bg: "primary.600",
+                endIcon: <CheckIcon size={5} />
+                }} mt="2">
+                    <Select.Item   label={"Male"} value={"Male"} />
+                    <Select.Item   label={"Female"} value={"Female"} />
+                </Select>
             </FormControl>
 
             

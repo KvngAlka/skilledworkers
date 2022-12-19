@@ -1,4 +1,5 @@
-import { FormControl, HStack, Input, Link, Text, VStack , Pressable, Radio, Stack, View, useToast, Spinner, Heading, Toast} from 'native-base'
+import { CommonActions } from '@react-navigation/native';
+import { FormControl, HStack, Input, Link, Text, VStack , Pressable, Radio, Stack, View, useToast, Spinner, Heading, Toast, Select, CheckIcon} from 'native-base'
 import React, { useEffect, useState } from 'react'
 import { StyleSheet } from 'react-native';
 import { axiosInstance } from '../state_manager/axios';
@@ -17,7 +18,6 @@ function RegistrationForm({navigation, isAWorker}: {navigation : any, isAWorker 
     const {state : {user}, dispatch} = useStateValue();
 
 
-
     useEffect(()=>{
         if(user){
             user.isAWorker 
@@ -27,6 +27,10 @@ function RegistrationForm({navigation, isAWorker}: {navigation : any, isAWorker 
             navigation.replace('ClientLayout')
         }
     },[user])
+
+    const handleGenderChange = (val : string)=>{
+        setUserInput({...userInput, gender : val})
+    }
 
 
     const handleSignUp = async()=>{
@@ -46,9 +50,16 @@ function RegistrationForm({navigation, isAWorker}: {navigation : any, isAWorker 
                 toast.show({title : data.msg , backgroundColor : "primary.900", fontWeight : 'normal'})
                 return
             }
-            addUserToDB(data, Toast);
-            dispatch({type : LOGIN, payload : data})
-            setIsSignUpLoading(false)
+
+            navigation.dispatch(
+                CommonActions.reset({
+                  index: 0,
+                  routes: [{ name: "SignIn" }],
+                })
+              )
+            // addUserToDB(data, Toast);
+            // dispatch({type : LOGIN, payload : data})
+            // setIsSignUpLoading(false)
         })
         .catch((err :any)=> {toast.show(err); setIsSignUpLoading(false)})
     }
@@ -83,9 +94,22 @@ function RegistrationForm({navigation, isAWorker}: {navigation : any, isAWorker 
         </FormControl>
 
         {/* gender goes here */}
-        <FormControl isRequired>
+        <FormControl isRequired >
+        <FormControl.Label>Gender</FormControl.Label>
+        <Select minWidth="200" borderRadius={12} onValueChange={(val)=> handleGenderChange(val)} accessibilityLabel="Gender" placeholder="Choose Gender" _selectedItem={{
+        bg: "primary.600",
+        endIcon: <CheckIcon size={5} />
+        }} mt="2">
+            <Select.Item   label={"Male"} value={"Male"} />
+            <Select.Item   label={"Female"} value={"Female"} />
+        </Select>
+        </FormControl>
+
+
+
+        {/* <FormControl isRequired>
             <FormControl.Label>Gender</FormControl.Label>
-            <Radio.Group name='gender'  value={userInput.gender} onChange = {(val)=> {setUserInput({...userInput, gender : val})}} >
+            <Radio.Group name='gender'  value={userInput.gender || "Male"} onChange = {(val)=> handleGenderChange(val)} >
                 <Stack direction={{base : 'row'}}  >
                     <Radio color = {'primary'}   value="Male" my={1} >
                         Male
@@ -96,7 +120,7 @@ function RegistrationForm({navigation, isAWorker}: {navigation : any, isAWorker 
                     </Radio>
                 </Stack>
             </Radio.Group>
-        </FormControl>
+        </FormControl> */}
 
         
 

@@ -14,10 +14,13 @@ const OrderDetails = ({route} : {route : any}) => {
     const {state : {user}} = useStateValue();
 
     const [isOpen, setIsOpen] = React.useState(false);
+    const [isOpen2, setIsOpen2] = React.useState(false);
 
     const onClose = () => setIsOpen(false);
+    const onClose2 = () => setIsOpen2(false);
   
     const cancelRef = React.useRef(null);
+    const doneRef = React.useRef(null);
     
 
     const deletePost = async ()=>{
@@ -71,13 +74,33 @@ const OrderDetails = ({route} : {route : any}) => {
                     <View height={10}></View>
                     {
                         isAccepted && 
-                        <Pressable mt={'2'} onPress = {()=> setIsOpen(true)} style = {styles.btn} backgroundColor = 'primary.600'>
+                        <Pressable mt={'2'} onPress = {()=> setIsOpen2(true)} style = {styles.btn} backgroundColor = 'primary.600'>
                             <Text style = {{color : 'white'}} >DONE</Text>
                         </Pressable>
                     }
                     <Pressable mt={'2'} onPress = {()=> setIsOpen(true)} style = {styles.btn} backgroundColor = 'red.600'>
                         <Text style = {{color : 'white'}} >CANCEL ORDER</Text>
                     </Pressable>
+
+
+                    <AlertDialog leastDestructiveRef={doneRef} isOpen={isOpen2} onClose={onClose2}>
+                        <AlertDialog.Content>
+                        <AlertDialog.CloseButton />
+                        <AlertDialog.Body>
+                            Are you sure job is done?
+                        </AlertDialog.Body>
+                        <AlertDialog.Footer>
+                            <Button.Group space={2}>
+                            <Button variant="unstyled" colorScheme="coolGray" onPress={onClose2} >
+                                Cancel
+                            </Button>
+                            <Button colorScheme="primary" onPress={deletePost}>
+                                Yes
+                            </Button>
+                            </Button.Group>
+                        </AlertDialog.Footer>
+                        </AlertDialog.Content>
+                    </AlertDialog>
 
                     <AlertDialog leastDestructiveRef={cancelRef} isOpen={isOpen} onClose={onClose}>
                         <AlertDialog.Content>

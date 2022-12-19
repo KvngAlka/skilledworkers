@@ -14,7 +14,7 @@ const Notifications = ({navigation, route} : {navigation : any, route : any}) =>
     const [postsLoading, setPostsLoading] = useState(true)
     const [refreshing, setRefreshing] = useState(false);
 
-
+    console.log("List Notification",listNotification)
 
     const fetchNotifications = async()=>{
         await axiosInstance.post(
@@ -26,7 +26,11 @@ const Notifications = ({navigation, route} : {navigation : any, route : any}) =>
             const {data} = res;
 
             if(data.code === 400) Toast.show({'title' : data.msg})
-            if(data.code === 201) setListNotification(data.data)
+            if(data.code === 201) {
+                if(data.data){
+                    setListNotification(data.data)
+                }
+            }
 
             setPostsLoading(false)
         })
@@ -52,9 +56,10 @@ const Notifications = ({navigation, route} : {navigation : any, route : any}) =>
             {
                 postsLoading && <Center><Text>Loading....</Text></Center>
             }
+            
             {
                 listNotification?.map((notification,i) =>{
-                    return <NotificationTile key={i} clientName={notification.nameOfClient}  postData={notification} navigation = {navigation}/>
+                    return  notification  && <NotificationTile key={i} clientName={notification?.nameOfClient}  postData={notification} navigation = {navigation}/>
                 })
             }
         </ScrollView>
