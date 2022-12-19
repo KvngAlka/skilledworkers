@@ -15,7 +15,7 @@ const SkillDetail = ({navigation, route} : {navigation : any, route : any}) => {
     const [service, setService]= useState({code : "",name : "", description : '',  imgUrl : ""})
     const [subServices, setSubServices] = useState([{code : "", price : "",  name : "",}])
     const [serviceSelect, setServiceSelect] = useState({serviceId : '', subServiceId : ""})
-    const [indexSelect, setIndexSelect] = useState<number | null>(null)
+    const [price, setPrice] = useState<string | null>(null)
 
     const { id, imgUrl, parentName, description }: any = route.params
 
@@ -72,6 +72,24 @@ const SkillDetail = ({navigation, route} : {navigation : any, route : any}) => {
       }
 
 
+      let handleSubSkillSelect = (val : string)=>{
+
+        const index = parseInt(val);
+  
+        setPrice(subServices[index]?.price)
+        
+        setServiceSelect(
+          {
+            ...serviceSelect,serviceId : service.code, 
+            subServiceId : subServices[index].code
+          }
+        )
+        
+        
+  
+      }
+
+
     useEffect(()=>{
       fetchService()
     },[])
@@ -119,7 +137,7 @@ const SkillDetail = ({navigation, route} : {navigation : any, route : any}) => {
 
                 <Center>
                   <FormControl isRequired >
-                    <Select minWidth="200" onValueChange={(val)=> setServiceSelect({...serviceSelect,serviceId : service.code, subServiceId : val})} accessibilityLabel="Choose Service to order" placeholder="Choose Service" _selectedItem={{
+                    <Select minWidth="200" onValueChange={(val)=> handleSubSkillSelect(val)} accessibilityLabel="Choose Service to order" placeholder="Choose Service" _selectedItem={{
                     bg: "primary.600",
                     endIcon: <CheckIcon size={5} />
                   }} mt="2">
@@ -137,7 +155,7 @@ const SkillDetail = ({navigation, route} : {navigation : any, route : any}) => {
 
               <View mt={'5'}>
                 <Text fontSize={'14'} color = {'primary.900'} style = {{fontFamily : "MontserratSB"}}  >Price</Text>
-                <Text fontWeight={500} fontSize = {'16'} style = {{fontFamily : "MontserratR"}}  >Ghc {indexSelect ? subServices[indexSelect].price : 0 }</Text>
+                <Text fontWeight={500} fontSize = {'16'} style = {{fontFamily : "MontserratR"}}  >Ghc {price ?? 0 }</Text>
               </View>
 
               <Box h={'10'}></Box>

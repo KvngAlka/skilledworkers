@@ -22,15 +22,13 @@ const OrderDetails = ({route} : {route : any}) => {
 
     const deletePost = async ()=>{
 
-        console.log(_id)
-
         await axiosInstance.post(
             "/post/delete",
-            {_id , ownerId : user?._id},
+            {_id : orderData._id?.toString(), ownerId : user?._id},
             {headers : { "Authorization" : `Bearer ${user?.accessToken}` }} 
             ).then(res => {
-            if(res.data.code === 200){
-                const {data} = res.data;
+            if(res.data.code === 201){
+                Toast.show({title : res.data.msg})
                 return;
             }
 
@@ -71,6 +69,12 @@ const OrderDetails = ({route} : {route : any}) => {
                     <Text  color ={ `${ isAccepted ? 'blue' : 'green.600'}` } style= {{fontFamily : "MontserratR"}}>{ isAccepted ? 'ACCEPTED' : 'PENDING'}</Text>
 
                     <View height={10}></View>
+                    {
+                        isAccepted && 
+                        <Pressable mt={'2'} onPress = {()=> setIsOpen(true)} style = {styles.btn} backgroundColor = 'primary.600'>
+                            <Text style = {{color : 'white'}} >DONE</Text>
+                        </Pressable>
+                    }
                     <Pressable mt={'2'} onPress = {()=> setIsOpen(true)} style = {styles.btn} backgroundColor = 'red.600'>
                         <Text style = {{color : 'white'}} >CANCEL ORDER</Text>
                     </Pressable>

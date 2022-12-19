@@ -8,14 +8,13 @@ import { PostProfile } from '../../state_manager/interfaces'
 
 const ServiceDetail = ({navigation, route} : {navigation : any, route : any}) => {
   
-    // const [userInput, setUserInput] = useState<PostProfile>({serviceName : "", description : "", location : "",});
     const {state : {user}} = useStateValue();
     const [dataSubmitting,setDataSubmitting] = useState(false)
 
     const [service, setService]= useState({code : "",name : "", description : '',  imgUrl : ""})
     const [subServices, setSubServices] = useState([{code : "", price : "",  name : "",}])
     const [serviceSelect, setServiceSelect] = useState({serviceId : '', subServiceId : ""})
-    const [indexSelect, setIndexSelect] = useState<number | null>(null)
+    const [price, setPrice] = useState<string | null>(null)
 
     const { id, imgUrl, parentName, description }: any = route.params
 
@@ -53,18 +52,27 @@ const ServiceDetail = ({navigation, route} : {navigation : any, route : any}) =>
       .catch(err => { Toast.show(err.message,) })
     }
 
+    let handleSubServiceSelect = (val : string)=>{
+
+      const index = parseInt(val);
+
+      setPrice(subServices[index].price)
+      
+      setServiceSelect(
+        {
+          ...serviceSelect,serviceId : service.code, 
+          subServiceId : subServices[index].code
+        }
+      )
+      
+      
+
+    }
+
 
     useEffect(()=>{
       fetchService()
 
-      // setService({
-      //   code : id || ``, 
-      //   imgUrl : imgUrl || ``,
-      //   name : `${parentName} Service` || "",
-      //   description : description || "",
-      // })
-
-      
     },[])
   return (
     <ScrollView backgroundColor={'white'}>
@@ -107,28 +115,25 @@ const ServiceDetail = ({navigation, route} : {navigation : any, route : any}) =>
 
                 <Center>
                   <FormControl isRequired >
-                    <Select minWidth="200" onValueChange={(val)=> setServiceSelect({...serviceSelect,serviceId : service.code, subServiceId : val})} accessibilityLabel="Choose Service to order" placeholder="Choose Service" _selectedItem={{
+                    <Select minWidth="200" onValueChange={(val)=> handleSubServiceSelect(val)} accessibilityLabel="Choose Service to order" placeholder="Choose Service" _selectedItem={{
                     bg: "primary.600",
                     endIcon: <CheckIcon size={5} />
                   }} mt="2">
                     {
                       subServices?.map((_subservice, i)=>{
                         return (
-                          <Select.Item   key={i} label={_subservice.name} value={_subservice.code} />
+                          <Select.Item   key={i} label={_subservice.name} value={i.toString()} />
                         )
                       })
                     }
                     </Select>
-                    {/* <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>
-                      Please make a selection!
-                    </FormControl.ErrorMessage> */}
                   </FormControl>
                 </Center>
               </View>
 
               <View mt={'5'}>
                 <Text fontSize={'14'} color = {'primary.900'} style = {{fontFamily : "MontserratSB"}}  >Price</Text>
-                <Text fontWeight={500} fontSize = {'16'} style = {{fontFamily : "MontserratR"}}  >Ghc {indexSelect ? subServices[indexSelect].price : 0 }</Text>
+                <Text fontWeight={500} fontSize = {'16'} style = {{fontFamily : "MontserratR"}}  >Ghc {price ??  0 }</Text>
               </View>
 
               <Box h={'10'}></Box>

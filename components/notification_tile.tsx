@@ -2,7 +2,7 @@ import { Image, Pressable, Text, View } from 'native-base'
 import React from 'react'
 import { PostProfile } from '../state_manager/interfaces'
 
-const NotificationTile = ({postData,navigation, clientName} : {postData : PostProfile, navigation : any, clientName : string}) => {
+const NotificationTile = ({postData,navigation, clientName} : {postData : PostProfile, navigation : any, clientName? : string}) => {
   const {description,name , imgUrl} = postData;
 
   return (
