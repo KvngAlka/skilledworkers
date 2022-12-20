@@ -23,8 +23,6 @@ const JobDetails = ({route, navigation} : {route : any, navigation : any}) => {
 
     const deletePost = async ()=>{
 
-        console.log(_id)
-
         await axiosInstance.post(
             "/post/delete",
             {_id , ownerId : user?._id},
@@ -37,7 +35,7 @@ const JobDetails = ({route, navigation} : {route : any, navigation : any}) => {
 
             Toast.show({title : res.data.msg})
             
-        }).catch(err => { console.log("::::ERR::::", err) })
+        }).catch(err => { Toast.show({title : err}) })
     }
   return (
     <ScrollView>

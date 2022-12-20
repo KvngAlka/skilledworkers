@@ -1,6 +1,7 @@
 import { Ionicons } from '@expo/vector-icons'
 import { CheckIcon, FormControl, HStack, Icon, Image, Input, Pressable, ScrollView, Select, Spinner, Text, Toast, View } from 'native-base'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
+import { RefreshControl } from 'react-native'
 import { axiosInstance } from '../../state_manager/axios'
 import { useStateValue } from '../../state_manager/contextApi'
 import { UserProfile } from '../../state_manager/interfaces'
@@ -9,7 +10,8 @@ const AddSkill = ({navigation} : {navigation : any}) => {
   const {state : {user}} = useStateValue();
   const [skills, setSkills] = useState<UserProfile['skills'] | null>(null)
   const [services, setServices]= useState([{_id : "", code : "", name : "",   imgUrl : "", description : ""}])
-  const [serviceSelect, setServiceSelect] = useState({code : '', name : ""})
+  const [serviceSelect, setServiceSelect] = useState({code : '', name : ""});
+  const [refreshing, setRefreshing] = useState(false);
 
   
 
@@ -41,9 +43,8 @@ const AddSkill = ({navigation} : {navigation : any}) => {
         setSkills(res.data?.data)
       }
 
-      console.log(":: res raw",res.data)
     })
-    .catch(err => { console.log(err) ; Toast.show(err) })
+    .catch(err => {  Toast.show(err) })
 
   }
 
@@ -55,6 +56,13 @@ const AddSkill = ({navigation} : {navigation : any}) => {
     }
     return;
   }
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    fetchServices();
+    fetchSkills().
+    then(()=> setRefreshing(false))
+  },[]);
 
 
   useEffect(()=>{
@@ -102,7 +110,7 @@ const AddSkill = ({navigation} : {navigation : any}) => {
           
         </View>
 
-        <ScrollView flex={1} width = "100%" background={"gray.200"} p={'2'}>
+        <ScrollView flex={1} width = "100%" background={"gray.200"} p={'2'}  refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>} >
           {
             skills?.map((skill,i)=>{
               return(

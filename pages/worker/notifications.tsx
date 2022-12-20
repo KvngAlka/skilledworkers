@@ -14,7 +14,6 @@ const Notifications = ({navigation, route} : {navigation : any, route : any}) =>
     const [postsLoading, setPostsLoading] = useState(true)
     const [refreshing, setRefreshing] = useState(false);
 
-    console.log("List Notification",listNotification)
 
     const fetchNotifications = async()=>{
         await axiosInstance.post(

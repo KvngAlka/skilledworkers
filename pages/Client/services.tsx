@@ -14,7 +14,7 @@ import { PostProfile } from '../../state_manager/interfaces';
 const Services = ({navigation} : {navigation : any}) => {
 
     const {state : {user}} = useStateValue();
-    const [services, setServices] = useState<any>();
+    const [services, setServices] = useState<any>([]);
     const [pageLoading, setPageLoading] = useState(true);
 
     useEffect(()=>{
@@ -66,6 +66,14 @@ const Services = ({navigation} : {navigation : any}) => {
                         {/* Work Category */}
                         Order Service
                     </Heading>
+
+                    {
+                        !pageLoading && services?.length === 0
+                        &&
+                        <View >
+
+                        </View>
+                    }
 
                     <View w={'full'} height={'92%'}>
                         <FlatList

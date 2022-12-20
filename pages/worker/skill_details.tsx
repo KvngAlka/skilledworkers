@@ -144,7 +144,7 @@ const SkillDetail = ({navigation, route} : {navigation : any, route : any}) => {
                     {
                       subServices?.map((_subservice, i)=>{
                         return (
-                          <Select.Item   key={i} label={_subservice.name} value={_subservice.code} />
+                          <Select.Item   key={i} label={_subservice.name} value={i.toString()} />
                         )
                       })
                     }
